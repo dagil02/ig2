@@ -69,14 +69,12 @@ void IG2App::setupScene(void)
   cam->setNearClipDistance(1); 
   cam->setFarClipDistance(10000);
   cam->setAutoAspectRatio(true);
-  //cam->setPolygonMode(Ogre::PM_WIREFRAME); 
 
   mCamNode = mSM->getRootSceneNode()->createChildSceneNode("nCam");
   mCamNode->attachObject(cam);
 
   mCamNode->setPosition(0, 0, 1000);
-  mCamNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
-  //mCamNode->setDirection(Ogre::Vector3(0, 0, -1));  
+  mCamNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);  
   
   // and tell it to render into the main window
   Viewport* vp = getRenderWindow()->addViewport(cam);
@@ -91,11 +89,9 @@ void IG2App::setupScene(void)
   luz->setDiffuseColour(0.75, 0.75, 0.75);
 
   mLightNode = mSM->getRootSceneNode()->createChildSceneNode("nLuz");
-  //mLightNode = mCamNode->createChildSceneNode("nLuz");
   mLightNode->attachObject(luz);
 
-  mLightNode->setDirection(Ogre::Vector3(0, 0, -1));  //vec3.normalise();
-  //lightNode->setPosition(0, 0, 1000);
+  mLightNode->setDirection(Ogre::Vector3(0, 0, -1));  
  
   //------------------------------------------------------------------------
 
@@ -105,28 +101,24 @@ void IG2App::setupScene(void)
 
   // PARTE 1 DE LA PRACTICA 0
 
-  Ogre::Entity* ent = mSM->createEntity("Sinbad.mesh");
+  /*Ogre::Entity* ent = mSM->createEntity("Sinbad.mesh");
 
   mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSinbad");
   mSinbadNode->attachObject(ent);
 
   mSinbadNode->setPosition(0, 20, 0);
-  mSinbadNode->setScale(20, 20, 20);
-  //mSinbadNode->yaw(Ogre::Degree(-45));
-  //mSinbadNode->showBoundingBox(true);
-  //mSinbadNode->setVisible(false);
-
+  mSinbadNode->setScale(20, 20, 20);*/
 
 
   //Añadir habitacion
-  Ogre::Entity* hab1 = mSM->createEntity("RomanBathLower.mesh");
+  /*Ogre::Entity* hab1 = mSM->createEntity("RomanBathLower.mesh");
   mHabNode1 = mSM->getRootSceneNode()->createChildSceneNode("HabitacionB");
   mHabNode1->attachObject(hab1);
   mHabNode1->setScale(1, 1, 1);
   Ogre::Entity* hab2 = mSM->createEntity("RomanBathUpper.mesh");
   mHabNode2 = mSM->getRootSceneNode()->createChildSceneNode("HabitacionA");
   mHabNode2->attachObject(hab2);
-  mHabNode2->setScale(1, 1, 1);
+  mHabNode2->setScale(1, 1, 1);*/
 
 
 
@@ -189,8 +181,6 @@ void IG2App::setupScene(void)
   addInputListener(mCamMgr);
   mCamMgr->setStyle(OgreBites::CS_ORBIT);  
   
-  //mCamMgr->setTarget(mSinbadNode);  
-  //mCamMgr->setYawPitchDist(Radian(0), Degree(30), 100);
 
   //------------------------------------------------------------------------
 
