@@ -5,9 +5,7 @@
 #include <SDL_keycode.h>
 #include <OgreMeshManager.h>
 
-
 #define PI 3.1415926536
-
 
 using namespace Ogre;
 
@@ -19,10 +17,16 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
   }
   else if (evt.keysym.sym == SDLK_g) {
       //Apartado 3
-      aspas->roll(Ogre::Degree(1));
+      /*aspas->roll(Ogre::Degree(1));
       for (int i = 0; i < num; i++) {
           std::string name = "adorno_" + std::to_string(i);
           mSM->getSceneNode(name)->roll(Ogre::Degree(-1));
+      }*/
+
+      //Apartado 6
+      molinoAspas->aspasNode->roll(Ogre::Degree(1));
+      for (int i = 0; i < num; i++) {
+          molinoAspas->aspasNode->getChild("aspa_" + std::to_string(i))->getChild("adorno" + std::to_string(i))->roll(Ogre::Degree(-1));    //Nodo Molino -> Nodo Aspa -> Nodo cilindro(adorno)
       }
   }
   
@@ -123,7 +127,7 @@ void IG2App::setupScene(void)
   
   //Apartado 2
   
-  aspas = mSM->getRootSceneNode()->createChildSceneNode("aspas");
+  /*aspas = mSM->getRootSceneNode()->createChildSceneNode("aspas");
   SceneNode* mHourNode[100] = { 0 }; //numero maximo de aspas = 100
   for (int i = 0; i < num; i++) {
 
@@ -154,10 +158,13 @@ void IG2App::setupScene(void)
       aspa->setPosition(sin(i * (2 * PI / num)) * 200, cos(i * (2 * PI / num)) * 200, 0);
       
       mHourNode[i] = aspa;
-  }
 
+  
+  }*/
 
-
+  //Apartado 5
+  num = 10; //numero aspas molino
+  molinoAspas = new AspasMolino(num, mSM);
 
   //------------------------------------------------------------------------
 
@@ -170,3 +177,38 @@ void IG2App::setupScene(void)
 
 }
 
+AspasMolino::AspasMolino(int num_aspas, Ogre::SceneManager*& mSM)
+{
+    numAspas = num_aspas;
+
+    //Creacion aspas
+    aspasNode = mSM->getRootSceneNode()->createChildSceneNode("aspas");
+    Aspa* aspasList[100] = { nullptr }; //numero maximo de aspas = 100
+    for (int i = 0; i < numAspas; i++) {
+        
+        aspasList[0] = new Aspa(mSM, std::to_string(i), aspasNode);
+        aspasList[0]->aspaNode->roll(Ogre::Degree(i * -360 / numAspas));
+        aspasList[0]->cilindroNode->roll(Ogre::Degree(i * 360 / numAspas));
+        aspasList[0]->aspaNode->setPosition(sin(i * (2 * PI / numAspas)) * 200, cos(i * (2 * PI / numAspas)) * 200, 0);
+    }
+}
+
+Aspa::Aspa(Ogre::SceneManager* &mSM, std::string id, Ogre::SceneNode* &aspasNode)
+{
+    
+  aspaNode = aspasNode->createChildSceneNode("aspa_" + id);
+
+  Ogre::Entity* tab = mSM->createEntity("cube.mesh");
+  tableroNode = aspaNode->createChildSceneNode("tablero" + id);
+  tableroNode->attachObject(tab);
+
+  Ogre::Entity* cil = mSM->createEntity("Barrel.mesh");
+  cilindroNode = aspaNode->createChildSceneNode("adorno" + id);
+  cilindroNode->attachObject(cil);
+
+  tableroNode->setScale(0.7, 4, 0.1);
+  cilindroNode->setScale(4, 9, 4);
+  cilindroNode->setPosition(0, 170, 10);
+  aspaNode->setPosition(0, 0, -300);
+
+}
