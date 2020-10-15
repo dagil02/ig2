@@ -22,7 +22,7 @@ public:
     AspasMolino(int num_aspas, Ogre::SceneManager*& mSM);   //maximo numero de aspas 100
     Ogre::SceneNode* aspasNode = nullptr;
     int numAspas;
-    
+    Aspa** aspasList;
 };
 
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener 

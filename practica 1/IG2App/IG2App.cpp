@@ -4,6 +4,7 @@
 #include <OgreInput.h>
 #include <SDL_keycode.h>
 #include <OgreMeshManager.h>
+#include <iostream>
 
 #define PI 3.1415926536
 
@@ -23,10 +24,11 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
           mSM->getSceneNode(name)->roll(Ogre::Degree(-1));
       }*/
 
-      //Apartado 6
+      //Apartado 6 y 8
       molinoAspas->aspasNode->roll(Ogre::Degree(1));
       for (int i = 0; i < num; i++) {
-          molinoAspas->aspasNode->getChild("aspa_" + std::to_string(i))->getChild("adorno" + std::to_string(i))->roll(Ogre::Degree(-1));    //Nodo Molino -> Nodo Aspa -> Nodo cilindro(adorno)
+          //molinoAspas->aspasNode->getChild("aspa_" + std::to_string(i))->getChild("adorno_" + std::to_string(i))->roll(Ogre::Degree(-1));    //Nodo Molino -> Nodo Aspa -> Nodo cilindro(adorno)
+          mSM->getSceneNode("adorno_" + std::to_string(i))->roll(Ogre::Degree(-1));
       }
   }
   
@@ -128,7 +130,7 @@ void IG2App::setupScene(void)
   //Apartado 2
   
   /*aspas = mSM->getRootSceneNode()->createChildSceneNode("aspas");
-  SceneNode* mHourNode[100] = { 0 }; //numero maximo de aspas = 100
+  SceneNode* mHourNode[100] = { nullptr }; //numero maximo de aspas = 100
   for (int i = 0; i < num; i++) {
 
       
@@ -177,19 +179,59 @@ void IG2App::setupScene(void)
 
 }
 
+//Apartado 5
+/*
 AspasMolino::AspasMolino(int num_aspas, Ogre::SceneManager*& mSM)
 {
     numAspas = num_aspas;
 
     //Creacion aspas
     aspasNode = mSM->getRootSceneNode()->createChildSceneNode("aspas");
-    Aspa* aspasList[100] = { nullptr }; //numero maximo de aspas = 100
+    for (int i = 0; i < numAspas; i++) {
+
+
+        Ogre::Entity* ent1 = mSM->createEntity("cube.mesh");
+        Ogre::Entity* ent2 = mSM->createEntity("Barrel.mesh");
+
+        std::string name0 = "aspa_" + std::to_string(i);
+        std::string name1 = "tablero_" + std::to_string(i);
+        std::string name2 = "adorno_" + std::to_string(i);
+
+        Ogre::SceneNode* aspa = aspasNode->createChildSceneNode(name0);
+        Ogre::SceneNode* tablero = aspa->createChildSceneNode(name1);
+        Ogre::SceneNode* adorno = aspa->createChildSceneNode(name2);
+
+
+        tablero->attachObject(ent1);
+        adorno->attachObject(ent2);
+
+        aspasNode->setPosition(0, 0, -300);
+
+        tablero->setScale(0.7, 4, 0.1);
+        adorno->setScale(4, 9, 4);
+        adorno->setPosition(0, 170, 10);
+
+        aspa->roll(Ogre::Degree(i * -360 / numAspas));
+        adorno->roll(Ogre::Degree(i * 360 / numAspas));
+        aspa->setPosition(sin(i * (2 * PI / numAspas)) * 200, cos(i * (2 * PI / numAspas)) * 200, 0);
+    }
+}*/
+
+//Apartado 7
+
+AspasMolino::AspasMolino(int num_aspas, Ogre::SceneManager*& mSM)
+{
+    numAspas = num_aspas;
+
+    //Creacion aspas
+    aspasNode = mSM->getRootSceneNode()->createChildSceneNode("aspas");
+    aspasList = new Aspa * [numAspas];
     for (int i = 0; i < numAspas; i++) {
         
-        aspasList[0] = new Aspa(mSM, std::to_string(i), aspasNode);
-        aspasList[0]->aspaNode->roll(Ogre::Degree(i * -360 / numAspas));
-        aspasList[0]->cilindroNode->roll(Ogre::Degree(i * 360 / numAspas));
-        aspasList[0]->aspaNode->setPosition(sin(i * (2 * PI / numAspas)) * 200, cos(i * (2 * PI / numAspas)) * 200, 0);
+        aspasList[i] = new Aspa(mSM, std::to_string(i), aspasNode);
+        aspasList[i]->aspaNode->roll(Ogre::Degree(i * -360 / numAspas));
+        aspasList[i]->cilindroNode->roll(Ogre::Degree(i * 360 / numAspas));
+        aspasList[i]->aspaNode->setPosition(sin(i * (2 * PI / numAspas)) * 200, cos(i * (2 * PI / numAspas)) * 200, 0);
     }
 }
 
@@ -199,11 +241,11 @@ Aspa::Aspa(Ogre::SceneManager* &mSM, std::string id, Ogre::SceneNode* &aspasNode
   aspaNode = aspasNode->createChildSceneNode("aspa_" + id);
 
   Ogre::Entity* tab = mSM->createEntity("cube.mesh");
-  tableroNode = aspaNode->createChildSceneNode("tablero" + id);
+  tableroNode = aspaNode->createChildSceneNode("tablero_" + id);
   tableroNode->attachObject(tab);
 
   Ogre::Entity* cil = mSM->createEntity("Barrel.mesh");
-  cilindroNode = aspaNode->createChildSceneNode("adorno" + id);
+  cilindroNode = aspaNode->createChildSceneNode("adorno_" + id);
   cilindroNode->attachObject(cil);
 
   tableroNode->setScale(0.7, 4, 0.1);
