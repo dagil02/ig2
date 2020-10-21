@@ -2,28 +2,11 @@
 #define __IG2App_H__
 
 #include "IG2ApplicationContext.h"
-#include <OgreSceneManager.h>
-#include <OgreSceneNode.h>
 #include <OgreTrays.h>
 #include <OgreCameraMan.h>
+#include "Elements.h"
 
 
-class Aspa {
-public:
-    Aspa(Ogre::SceneManager* &mSM, std::string id, Ogre::SceneNode* &aspasNode);
-    ~Aspa() {};
-    Ogre::SceneNode* aspaNode = nullptr;
-    Ogre::SceneNode* tableroNode = nullptr;
-    Ogre::SceneNode* cilindroNode = nullptr;
-};
-
-class AspasMolino {
-public:
-    AspasMolino(int num_aspas, Ogre::SceneManager*& mSM);   //maximo numero de aspas 100
-    Ogre::SceneNode* aspasNode = nullptr;
-    int numAspas;
-    Aspa** aspasList;
-};
 
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener 
 {
@@ -50,11 +33,14 @@ protected:
   OgreBites::CameraMan* mCamMgr = nullptr;
 
   //Apartado 5
-  AspasMolino* molinoAspas = nullptr;
+  //AspasMolino* molinoAspas = nullptr;
 
   //numero aspas
   int num = 12; //maximo de 100
  
+
+  // Molino Apartado 9
+  Molino* m = nullptr;
 };
 
 #endif
