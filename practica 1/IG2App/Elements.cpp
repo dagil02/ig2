@@ -3,46 +3,6 @@
 #include <OgreInput.h>
 #include <SDL_keycode.h>
 
-//Apartado 5
-/*
-AspasMolino::AspasMolino(int num_aspas, Ogre::SceneManager*& mSM)
-{
-    numAspas = num_aspas;
-
-    //Creacion aspas
-    aspasNode = mSM->getRootSceneNode()->createChildSceneNode("aspas");
-    for (int i = 0; i < numAspas; i++) {
-
-
-        Ogre::Entity* ent1 = mSM->createEntity("cube.mesh");
-        Ogre::Entity* ent2 = mSM->createEntity("Barrel.mesh");
-
-        std::string name0 = "aspa_" + std::to_string(i);
-        std::string name1 = "tablero_" + std::to_string(i);
-        std::string name2 = "adorno_" + std::to_string(i);
-
-        Ogre::SceneNode* aspa = aspasNode->createChildSceneNode(name0);
-        Ogre::SceneNode* tablero = aspa->createChildSceneNode(name1);
-        Ogre::SceneNode* adorno = aspa->createChildSceneNode(name2);
-
-
-        tablero->attachObject(ent1);
-        adorno->attachObject(ent2);
-
-        aspasNode->setPosition(0, 0, -300);
-
-        tablero->setScale(0.7, 4, 0.1);
-        adorno->setScale(4, 9, 4);
-        adorno->setPosition(0, 170, 10);
-
-        aspa->roll(Ogre::Degree(i * -360 / numAspas));
-        adorno->roll(Ogre::Degree(i * 360 / numAspas));
-        aspa->setPosition(sin(i * (2 * PI / numAspas)) * 200, cos(i * (2 * PI / numAspas)) * 200, 0);
-    }
-}*/
-
-
-//Apartado 7
 
 AspasMolino::AspasMolino(int num_aspas, Ogre::SceneManager*& mSM, Ogre::SceneNode* padre = nullptr) 
 {
@@ -89,7 +49,6 @@ Aspa::Aspa(Ogre::SceneManager*& mSM, std::string id, Ogre::SceneNode*& aspasNode
 
 }
 
-//Apartado 9
 Molino::Molino(int num_aspas, Ogre::SceneManager*& mSM)
 {
     mNode = mSM->getRootSceneNode()->createChildSceneNode("molino");

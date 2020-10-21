@@ -29,7 +29,7 @@ public:
     Aspa** aspasList;
 };
 
-//Apartado 9
+
 class Molino : OgreBites::InputListener {
 public:
     Molino(int num_aspas, Ogre::SceneManager*& mSM);   //maximo numero de aspas 100
