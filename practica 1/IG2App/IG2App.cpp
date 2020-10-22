@@ -11,11 +11,14 @@ using namespace Ogre;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-  if (evt.keysym.sym == SDLK_ESCAPE)
-  {
-    getRoot()->queueEndRendering();
-  }
-  return true;
+	for (int i = 0; i < objects.size(); i++) {
+		objects[i]->keyPressed(evt);
+	}
+	if (evt.keysym.sym == SDLK_ESCAPE)
+    {
+	 getRoot()->queueEndRendering();
+    }
+    return true;
 }
 
 void IG2App::shutdown()
@@ -48,7 +51,7 @@ void IG2App::setup(void)
   mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
   addInputListener(mTrayMgr);
 
-  addInputListener(this);   
+  addInputListener(this);
   setupScene();
 }
 
@@ -89,7 +92,10 @@ void IG2App::setupScene(void)
 
 
   num = 12; //numero aspas molino
-  m = new Molino(num, mSM);
+  Molino* m = new Molino(num, mSM);
+  
+  
+  objects.push_back(m);
   //------------------------------------------------------------------------
 
   mCamMgr = new OgreBites::CameraMan(mCamNode);

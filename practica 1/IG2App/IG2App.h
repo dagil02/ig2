@@ -5,7 +5,7 @@
 #include <OgreTrays.h>
 #include <OgreCameraMan.h>
 #include "Elements.h"
-
+#include <vector>
 
 
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener 
@@ -38,9 +38,9 @@ protected:
   //numero aspas
   int num = 12; //maximo de 100
  
+  std::vector<SceneObject*> objects;
 
-  // Molino Apartado 9
-  Molino* m = nullptr;
+  
 };
 
 #endif

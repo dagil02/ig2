@@ -3,7 +3,6 @@
 #include <OgreInput.h>
 #include <SDL_keycode.h>
 
-
 AspasMolino::AspasMolino(int num_aspas, Ogre::SceneManager*& mSM, Ogre::SceneNode* padre = nullptr) 
 {
     numAspas = num_aspas;
@@ -25,6 +24,18 @@ AspasMolino::AspasMolino(int num_aspas, Ogre::SceneManager*& mSM, Ogre::SceneNod
         aspasList[i]->aspaNode->roll(Ogre::Degree(i * -360 / numAspas));
         aspasList[i]->cilindroNode->roll(Ogre::Degree(i * 360 / numAspas));
         aspasList[i]->aspaNode->setPosition(sin(i * (2 * PI / numAspas)) * 200, cos(i * (2 * PI / numAspas)) * 200, 0);
+    }
+}
+
+void AspasMolino::swapCilindro()
+{
+    cilindro = !cilindro;
+
+    if (cilindro) {
+        centroNode->setPosition(0, 0, 0);
+    }
+    else {
+        centroNode->setPosition(0, 0, -50);
     }
 }
 
@@ -51,6 +62,7 @@ Aspa::Aspa(Ogre::SceneManager*& mSM, std::string id, Ogre::SceneNode*& aspasNode
 
 Molino::Molino(int num_aspas, Ogre::SceneManager*& mSM)
 {
+    numAspas = num_aspas;
     mNode = mSM->getRootSceneNode()->createChildSceneNode("molino");
     aspas = new AspasMolino(num_aspas, mSM, mNode);
     //cilindro
@@ -75,8 +87,14 @@ bool Molino::keyPressed(const OgreBites::KeyboardEvent& evt)
 
         for (int i = 0; i < numAspas; i++) {
             
-            aspas->aspasList[i]->aspaNode->roll(Ogre::Degree(-1));
+            aspas->aspasList[i]->cilindroNode->roll(Ogre::Degree(-1));
         }
+    }
+    else if (evt.keysym.sym == SDLK_c) {
+        aspas->swapCilindro();
+    }
+    else if (evt.keysym.sym == SDLK_h) {
+        mNode->yaw(Ogre::Degree(-1));
     }
 
     return true;
