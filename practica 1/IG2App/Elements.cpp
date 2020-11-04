@@ -3,24 +3,25 @@
 #include <OgreInput.h>
 #include <SDL_keycode.h>
 
-AspasMolino::AspasMolino(int num_aspas, Ogre::SceneManager*& mSM, Ogre::SceneNode* padre = nullptr) 
+AspasMolino::AspasMolino(int num_aspas, Ogre::SceneManager*& mSM, std::string name = "molinoAspas", Ogre::SceneNode* padre = nullptr) 
 {
     numAspas = num_aspas;
-    if (padre == nullptr) mainNode = mSM->getRootSceneNode()->createChildSceneNode("molinoAspas");
-    else mainNode = padre->createChildSceneNode("molinoAspas");
+    if (padre == nullptr) mainNode = mSM->getRootSceneNode()->createChildSceneNode(name);
+    else mainNode = padre->createChildSceneNode(name);
+
     //Creacion centro apartado 9
-    centroNode = mainNode->createChildSceneNode("centro");
+    centroNode = mainNode->createChildSceneNode(name + "centro");
     Ogre::Entity* ent = mSM->createEntity("Barrel.mesh");
     centroNode->attachObject(ent);
     centroNode->setScale(15, 10, 15);
     centroNode->pitch(Ogre::Degree(90));
    
     //Creacion aspas
-    aspasNode = mainNode->createChildSceneNode("aspas");
+    aspasNode = mainNode->createChildSceneNode(name + "aspas");
     aspasList = new Aspa * [numAspas];
     for (int i = 0; i < numAspas; i++) {
 
-        aspasList[i] = new Aspa(mSM, std::to_string(i), aspasNode);
+        aspasList[i] = new Aspa(mSM, name + std::to_string(i), aspasNode);
         aspasList[i]->aspaNode->roll(Ogre::Degree(i * -360 / numAspas));
         aspasList[i]->cilindroNode->roll(Ogre::Degree(i * 360 / numAspas));
         aspasList[i]->aspaNode->setPosition(sin(i * (2 * PI / numAspas)) * 200, cos(i * (2 * PI / numAspas)) * 200, 0);
@@ -64,7 +65,7 @@ Molino::Molino(int num_aspas, Ogre::SceneManager*& mSM)
 {
     numAspas = num_aspas;
     mNode = mSM->getRootSceneNode()->createChildSceneNode("molino");
-    aspas = new AspasMolino(num_aspas, mSM, mNode);
+    aspas = new AspasMolino(num_aspas, mSM, "molinoAspas", mNode);
     aspas->mainNode->setPosition(0, 0, 200);
     //cilindro
     cuerpoNode = mNode->createChildSceneNode("cuerpo");
@@ -214,4 +215,70 @@ Sol::~Sol()
 {
     delete node;
     node = nullptr;
+}
+
+Avion::Avion(Ogre::SceneManager* mSM)   
+{
+    mNode = mSM->getRootSceneNode()->createChildSceneNode("Avion");
+
+        /*Cuerpo*/
+    Ogre::SceneNode* cuerpoNode = mNode->createChildSceneNode("cuerpo");
+    Ogre::Entity* cuerpo = mSM->createEntity("sphere.mesh");
+    mNode->attachObject(cuerpo);
+    cuerpoNode->setScale(0.5, 0.5, 0.5);
+
+        /*Frente*/
+    Ogre::SceneNode* frenteNode = mNode->createChildSceneNode("frente");
+    Ogre::Entity* frente = mSM->createEntity("Barrel.mesh");
+    frenteNode->attachObject(frente);
+    frenteNode->setScale(10, 5, 10);
+    frenteNode->pitch(Ogre::Degree(90));
+    frenteNode->setPosition(0, 0, 100);
+
+        /*Piloto*/
+    Ogre::SceneNode* pilotoNode = mNode->createChildSceneNode("piloto");
+    Ogre::Entity* piloto = mSM->createEntity("ninja.mesh");
+    pilotoNode->attachObject(piloto);
+    pilotoNode->setScale(0.5, 0.5, 0.5);
+    pilotoNode->yaw(Ogre::Degree(180));
+    pilotoNode->setPosition(0, 40, 0);
+
+        /*Alas*/
+    Ogre::SceneNode* alaINode = mNode->createChildSceneNode("alaI");
+    Ogre::Entity* alaI = mSM->createEntity("cube.mesh");
+    alaINode->attachObject(alaI);
+    alaINode->setScale(2, 0.1, 1);
+    alaINode->setPosition(-180, 0, 0);
+
+    Ogre::SceneNode* alaDNode = mNode->createChildSceneNode("alaD");
+    Ogre::Entity* alaD = mSM->createEntity("cube.mesh");
+    alaDNode->attachObject(alaD);
+    alaDNode->setScale(2, 0.1, 1);
+    alaDNode->setPosition(180, 0, 0);
+
+        /*Helices*/
+    Ogre::SceneNode* heliceNodeI = mNode->createChildSceneNode("heliceI");
+    AspasMolino* aspasI = new AspasMolino(5, mSM,"molinoAspasI", heliceNodeI);
+    heliceNodeI->setScale(0.15, 0.15, 0.15);
+    heliceNodeI->setPosition(alaINode->getPosition().x, alaINode->getPosition().y, alaINode->getPosition().z + 50);
+
+    Ogre::SceneNode* heliceNodeD = mNode->createChildSceneNode("heliceD");
+    AspasMolino* aspasD = new AspasMolino(5, mSM, "molinoAspasD", heliceNodeD);
+    heliceNodeD->setScale(0.15, 0.15, 0.15);
+    heliceNodeD->setPosition(alaDNode->getPosition().x, alaDNode->getPosition().y, alaDNode->getPosition().z + 50);
+}
+
+Avion::~Avion()
+{
+    delete mNode;
+    mNode = nullptr;
+}
+
+bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
+{
+    if (evt.keysym.sym == SDLK_g) {
+        mNode->getChild("heliceI")->roll(Ogre::Degree(-8));
+        mNode->getChild("heliceD")->roll(Ogre::Degree(-8));
+    }
+    return true;
 }

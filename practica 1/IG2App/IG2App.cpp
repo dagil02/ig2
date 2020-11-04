@@ -91,28 +91,29 @@ void IG2App::setupScene(void)
   // finally something to render
 
   //Molino
-  //num = 12; //numero aspas molino
-  //Molino* m = new Molino(num, mSM);
-  //objects.push_back(m);
+  /*num = 12; //numero aspas molino
+  Molino* m = new Molino(num, mSM);
+  objects.push_back(m);*/
 
   //Reloj
-  //Reloj* r = new Reloj(mSM);
-  //objects.push_back(r);
+  /*Reloj* r = new Reloj(mSM);
+  objects.push_back(r);*/
  
   //Tierra y Sol
-  Sol* s = new Sol(mSM);
+  /*Sol* s = new Sol(mSM);
   Tierra* t = new Tierra(mSM);
 
   objects.push_back(s);
-  objects.push_back(t);
+  objects.push_back(t);*/
 
+  Avion* avion = new Avion(mSM);
+  objects.push_back(avion);
   //------------------------------------------------------------------------
 
   mCamMgr = new OgreBites::CameraMan(mCamNode);
   addInputListener(mCamMgr);
   mCamMgr->setStyle(OgreBites::CS_ORBIT);  
   
-
   //------------------------------------------------------------------------
 
 }

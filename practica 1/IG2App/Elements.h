@@ -21,7 +21,7 @@ public:
 
 class AspasMolino {
 public:
-    AspasMolino(int num_aspas, Ogre::SceneManager*& mSM, Ogre::SceneNode* padre);   //maximo numero de aspas 100
+    AspasMolino(int num_aspas, Ogre::SceneManager*& mSM, std::string name, Ogre::SceneNode* padre);   //maximo numero de aspas 100
     Ogre::SceneNode* mainNode = nullptr;
     Ogre::SceneNode* aspasNode = nullptr;
     Ogre::SceneNode* centroNode = nullptr;
@@ -57,8 +57,8 @@ public:
     Ogre::SceneNode* clockNode = nullptr;
     Ogre::SceneNode* agujasNode = nullptr;
     bool keyPressed(const OgreBites::KeyboardEvent& evt);
+
 private:
-//sceneNode->roll(Ogre::Degree(-45), Ogre::Node::TS_WORLD);
     float rot;
 };
 
@@ -78,3 +78,10 @@ public:
     bool keyPressed(const OgreBites::KeyboardEvent& evt) { return true; };
 };
 
+class Avion : public SceneObject {
+public:
+    Avion(Ogre::SceneManager* mSM);
+    ~Avion();
+    Ogre::SceneNode* mNode = nullptr;
+    bool keyPressed(const OgreBites::KeyboardEvent& evt);
+};
