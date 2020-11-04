@@ -100,3 +100,118 @@ bool Molino::keyPressed(const OgreBites::KeyboardEvent& evt)
 
     return true;
 }
+
+Reloj::Reloj(Ogre::SceneManager* mSM)
+{
+
+    clockNode = mSM->getRootSceneNode()->createChildSceneNode("clockNode");
+    Ogre::SceneNode* mHourNode[12] = { 0 };
+
+    for (int i = 0; i < 12; i++) {
+
+        Ogre::Entity* ent = mSM->createEntity("sphere.mesh");
+
+        std::string name = "Hora " + std::to_string(i);
+
+        Ogre::SceneNode* node = clockNode->createChildSceneNode(name);
+        node->attachObject(ent);
+
+        node->setPosition(sin(i * (PI / 6)) * 400, cos(i * (PI / 6)) * 400, -300);
+        node->setScale(0.6, 0.6, 0.6);
+
+        mHourNode[i] = node;
+    }
+
+
+    ////Cambiar tamaño horas pares
+    //for (int i = 0; i < 12; i++) {
+
+    //    if (i % 2 == 1) continue;
+
+    //    std::string name = "Hora " + std::to_string(i);
+    //    Ogre::SceneNode* aux = mSM->getSceneNode(name);
+    //    aux->setScale(0.3, 0.3, 0.3);
+    //}
+
+    //Creando agujas
+    agujasNode = clockNode->createChildSceneNode("Agujas");
+    Ogre::Entity* hor = mSM->createEntity("cube.mesh");
+    Ogre::SceneNode* horarioNode = agujasNode->createChildSceneNode("Horario");
+    horarioNode->attachObject(hor);
+    horarioNode->setPosition(0, 90, -300);
+    horarioNode->setScale(0.15, 2, 0.15);
+
+    Ogre::Entity* min = mSM->createEntity("cube.mesh");
+    Ogre::SceneNode* minNode = agujasNode->createChildSceneNode("Minutero");
+    minNode->attachObject(min);
+    minNode->roll(Ogre::Degree(-90));
+    minNode->setPosition(133, 0, -300);
+    minNode->setScale(0.1, 3, 0.1);
+
+    Ogre::Entity* seg = mSM->createEntity("cube.mesh");
+    Ogre::SceneNode* segNode = agujasNode->createChildSceneNode("Segundero");
+    segNode->attachObject(seg);
+    segNode->roll(Ogre::Degree(120));
+    segNode->setPosition(-sin(2*PI/3) * 140, cos(2 * PI / 3) * 140, -300);
+    segNode->setScale(0.05, 3, 0.05);
+    rot = 120;
+}
+
+Reloj::~Reloj() 
+{
+    delete clockNode;
+    delete agujasNode;
+
+    clockNode = nullptr;
+    agujasNode = nullptr;
+
+}
+
+bool Reloj::keyPressed(const OgreBites::KeyboardEvent& evt)
+{
+    if (evt.keysym.sym == SDLK_h) 
+    {
+        
+        agujasNode->getChild("Segundero")->roll(Ogre::Degree(-1));
+        rot--;
+        agujasNode->getChild("Segundero")->setPosition(-sin(rot/180 * PI) * 140, cos(rot / 180 * PI) * 140, -300);
+    }
+
+    return true;
+}
+
+Tierra::Tierra(Ogre::SceneManager* mSM)
+{
+    node = mSM->getRootSceneNode()->createChildSceneNode("Tierra");
+    Ogre::Entity* tierra = mSM->createEntity("sphere.mesh");
+    node->attachObject(tierra);
+    node->setScale(0.5, 0.5, 0.5);
+    node->setPosition(100, 0, 0);
+}
+
+bool Tierra::keyPressed(const OgreBites::KeyboardEvent& evt)
+{
+    if (evt.keysym.sym == SDLK_j) {
+        node->rotate(Ogre::Vector3(0,1,0), Ogre::Degree(-1), Ogre::Node::TransformSpace::TS_WORLD);
+    }
+    return true;
+}
+
+Tierra::~Tierra()
+{
+    delete node;
+    node = nullptr;
+}
+
+Sol::Sol(Ogre::SceneManager* mSM)
+{
+    node = mSM->getRootSceneNode()->createChildSceneNode("Sol");
+    Ogre::Entity* sol = mSM->createEntity("sphere.mesh");
+    node->attachObject(sol);
+}
+
+Sol::~Sol()
+{
+    delete node;
+    node = nullptr;
+}

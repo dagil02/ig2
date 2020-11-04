@@ -50,4 +50,31 @@ public:
     //virtual void frameRendered(const Ogre::FrameEvent& evt) { }
 };
 
+class Reloj : public SceneObject {
+public:
+    Reloj(Ogre::SceneManager* mSM);
+    ~Reloj();
+    Ogre::SceneNode* clockNode = nullptr;
+    Ogre::SceneNode* agujasNode = nullptr;
+    bool keyPressed(const OgreBites::KeyboardEvent& evt);
+private:
+//sceneNode->roll(Ogre::Degree(-45), Ogre::Node::TS_WORLD);
+    float rot;
+};
+
+class Tierra : public SceneObject {
+public:
+    Tierra(Ogre::SceneManager* mSM);
+    ~Tierra();
+    Ogre::SceneNode* node = nullptr;
+    bool keyPressed(const OgreBites::KeyboardEvent& evt);
+};
+
+class Sol : public SceneObject {
+public:
+    Sol(Ogre::SceneManager* mSM);
+    ~Sol();
+    Ogre::SceneNode* node = nullptr;
+    bool keyPressed(const OgreBites::KeyboardEvent& evt) { return true; };
+};
 
