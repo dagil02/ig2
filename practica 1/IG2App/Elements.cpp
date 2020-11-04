@@ -65,17 +65,18 @@ Molino::Molino(int num_aspas, Ogre::SceneManager*& mSM)
     numAspas = num_aspas;
     mNode = mSM->getRootSceneNode()->createChildSceneNode("molino");
     aspas = new AspasMolino(num_aspas, mSM, mNode);
+    aspas->mainNode->setPosition(0, 0, 200);
     //cilindro
     cuerpoNode = mNode->createChildSceneNode("cuerpo");
     Ogre::Entity* ent = mSM->createEntity("Barrel.mesh");
     cuerpoNode->attachObject(ent);
-    cuerpoNode->setPosition(0, -220, -200);
+    cuerpoNode->setPosition(0, -220, 0);
     cuerpoNode->setScale(75, 100, 75);
     //esfera
     esferaNode = mNode->createChildSceneNode("cilindro");
     ent = mSM->createEntity("sphere.mesh");
     esferaNode->attachObject(ent);
-    esferaNode->setPosition(0, 80, -200);
+    esferaNode->setPosition(0, 80, 0);
     esferaNode->setScale(1.8, 1.8, 1.8);
 }
 
