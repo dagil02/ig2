@@ -6,7 +6,7 @@
 #include <OgreCameraMan.h>
 #include "Elements.h"
 #include <vector>
-
+#include "Plano.h"
 
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener 
 {
@@ -30,6 +30,7 @@ protected:
   Ogre::SceneNode * aspaNode = nullptr;
   Ogre::SceneNode* tableroNode = nullptr;
   Ogre::SceneNode* cilindroNode = nullptr;
+  Ogre::SceneNode* planoNode = nullptr;
   OgreBites::CameraMan* mCamMgr = nullptr;
   //Apartado 5
   //AspasMolino* molinoAspas = nullptr;
@@ -37,7 +38,6 @@ protected:
   //numero aspas
   int num = 12; //maximo de 100
  
-  std::vector<SceneObject*> objects;
 
   
 };

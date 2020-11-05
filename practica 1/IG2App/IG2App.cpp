@@ -11,9 +11,6 @@ using namespace Ogre;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-	for (int i = 0; i < objects.size(); i++) {
-		objects[i]->keyPressed(evt);
-	}
 	if (evt.keysym.sym == SDLK_ESCAPE)
     {
 	 getRoot()->queueEndRendering();
@@ -90,24 +87,47 @@ void IG2App::setupScene(void)
 
   // finally something to render
 
+  //Plano de la escena
+  Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("plano");
+  Plano* plano = new Plano(planoNode, "Suelo");
+
   //Molino
-  /*num = 12; //numero aspas molino
-  Molino* m = new Molino(num, mSM);
-  objects.push_back(m);*/
+  num = 12; //numero aspas molino
+  Ogre::SceneNode* molinoNode = mSM->getRootSceneNode()->createChildSceneNode("molino");
+  Molino* molino = new Molino(num, molinoNode);
+  molinoNode->translate(400, 100, -250);
+  molinoNode->setScale(0.2, 0.2, 0.2);
+  addInputListener(molino);
+  EntidadIG::addListener(molino);
 
-  //Reloj
-  /*Reloj* r = new Reloj(mSM);
-  objects.push_back(r);*/
- 
-  //Tierra y Sol
-  /*Sol* s = new Sol(mSM);
-  Tierra* t = new Tierra(mSM);
+  //Plano molino
+  Ogre::SceneNode* plano2Node = mSM->getRootSceneNode()->createChildSceneNode("plano2");
+  Plano* plano2 = new Plano(plano2Node, "planoMolino");
+  plano2Node->setScale(0.25, 1, 0.25);
+  plano2Node->translate(400, 1, -250);
 
-  objects.push_back(s);
-  objects.push_back(t);*/
+  //Avion
+  Ogre::SceneNode* avionNode = mSM->getRootSceneNode()->createChildSceneNode("avion");
+  Avion* avion = new Avion(avionNode);
+  avionNode->translate(0, 150, 0);
+  avionNode->setScale(0.2, 0.2, 0.2);
+  addInputListener(avion);
+  EntidadIG::addListener(avion);
 
-  Avion* avion = new Avion(mSM);
-  objects.push_back(avion);
+
+  //Plano Sinbad
+  Ogre::SceneNode* plano3Node = mSM->getRootSceneNode()->createChildSceneNode("plano3");
+  Plano* plano3 = new Plano(plano3Node, "planoSinbad");
+  plano3Node->setScale(0.25, 1, 0.25);
+  plano3Node->translate(-400, 1, 250);
+
+  //Sinbad
+  Ogre::SceneNode* sinbad = mSM->getRootSceneNode()->createChildSceneNode("sinbad");
+  Ogre::Entity* sinbadMesh = mSM->createEntity("Sinbad.mesh");
+  sinbad->attachObject(sinbadMesh);
+  sinbad->setScale(15, 15, 15);
+  sinbad->setPosition(-400, 75, 250);
+
   //------------------------------------------------------------------------
 
   mCamMgr = new OgreBites::CameraMan(mCamNode);
