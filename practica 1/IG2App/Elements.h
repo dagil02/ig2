@@ -43,7 +43,7 @@ public:
     Ogre::SceneNode* aspasNode = nullptr;
     AspasMolino* aspas = nullptr;
     bool keyPressed(const OgreBites::KeyboardEvent& evt);  // InputListener
-    virtual void frameRendered(const Ogre::FrameEvent& evt) { }
+    virtual void frameRendered(const Ogre::FrameEvent& evt);
 };
 
 class Reloj : public EntidadIG {
@@ -79,5 +79,5 @@ public:
     Avion(Ogre::SceneNode* node);
     ~Avion();
     bool keyPressed(const OgreBites::KeyboardEvent& evt);
-    virtual void frameRendered(const Ogre::FrameEvent& evt) { }
+    virtual void frameRendered(const Ogre::FrameEvent& evt);
 };

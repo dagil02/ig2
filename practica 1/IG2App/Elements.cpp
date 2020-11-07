@@ -91,16 +91,7 @@ Molino::~Molino()
 
 bool Molino::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-    if (evt.keysym.sym == SDLK_g) {
-       
-        aspas->getNode()->roll(Ogre::Degree(1));
-
-        for (int i = 0; i < numAspas; i++) {
-            
-            aspas->aspasList[i]->cilindroNode->roll(Ogre::Degree(-1));
-        }
-    }
-    else if (evt.keysym.sym == SDLK_c) {
+   if (evt.keysym.sym == SDLK_c) {
         aspas->swapCilindro();
     }
     else if (evt.keysym.sym == SDLK_h) {
@@ -108,6 +99,16 @@ bool Molino::keyPressed(const OgreBites::KeyboardEvent& evt)
     }
 
     return true;
+}
+
+void Molino::frameRendered(const Ogre::FrameEvent& evt)
+{
+    aspas->getNode()->roll(Ogre::Degree(1));
+
+    for (int i = 0; i < numAspas; i++) {
+
+        aspas->aspasList[i]->cilindroNode->roll(Ogre::Degree(-1));
+    }
 }
 
 Reloj::Reloj(Ogre::SceneNode* node) : EntidadIG(node)
@@ -264,9 +265,11 @@ Avion::~Avion()
 
 bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-    if (evt.keysym.sym == SDLK_g) {
-        mNode->getChild("heliceI")->roll(Ogre::Degree(-8));
-        mNode->getChild("heliceD")->roll(Ogre::Degree(-8));
-    }
     return true;
+}
+
+void Avion::frameRendered(const Ogre::FrameEvent& evt)
+{
+    mNode->getChild("heliceI")->roll(Ogre::Degree(-8));
+    mNode->getChild("heliceD")->roll(Ogre::Degree(-8));
 }
