@@ -257,6 +257,10 @@ Avion::Avion(Ogre::SceneNode* node) : EntidadIG(node)
     heliceNodeD->setScale(0.15, 0.15, 0.15);
     heliceNodeD->setPosition(alaDNode->getPosition().x, alaDNode->getPosition().y, alaDNode->getPosition().z + 50);
 
+    //rotacion inicial y posicion
+    rot = 0;
+    mNode->setPosition(-sin(rot / 180 * PI) * 200, 150, cos(rot / 180 * PI) * 200);
+    mNode->yaw(Ogre::Degree(-90));
 }
 
 Avion::~Avion()
@@ -270,6 +274,11 @@ bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 
 void Avion::frameRendered(const Ogre::FrameEvent& evt)
 {
+    //Helices
     mNode->getChild("heliceI")->roll(Ogre::Degree(-8));
     mNode->getChild("heliceD")->roll(Ogre::Degree(-8));
+    rot++;
+    //Movimiento
+    mNode->setPosition(-sin(rot / 180 * PI) * 200,150, cos(rot / 180 * PI) * 200);
+    mNode->yaw(Ogre::Degree(-1));
 }

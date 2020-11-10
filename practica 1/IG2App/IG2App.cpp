@@ -109,7 +109,6 @@ void IG2App::setupScene(void)
   //Avion
   Ogre::SceneNode* avionNode = mSM->getRootSceneNode()->createChildSceneNode("avion");
   Avion* avion = new Avion(avionNode);
-  avionNode->translate(0, 150, 0);
   avionNode->setScale(0.2, 0.2, 0.2);
   addInputListener(avion);
   EntidadIG::addListener(avion);
