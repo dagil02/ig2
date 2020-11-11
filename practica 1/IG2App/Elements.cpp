@@ -259,8 +259,20 @@ Avion::Avion(Ogre::SceneNode* node) : EntidadIG(node)
 
     //rotacion inicial y posicion
     rot = 0;
-    mNode->setPosition(-sin(rot / 180 * PI) * 200, 150, cos(rot / 180 * PI) * 200);
+    mNode->setPosition(-sin(rot / 180 * PI) * 200, mNode->getPosition().y, cos(rot / 180 * PI) * 200);
     mNode->yaw(Ogre::Degree(-90));
+
+    //Foco
+
+    foco = mSM->createLight("FocoAvion");
+    foco->setType(Ogre::Light::LT_SPOTLIGHT);
+    foco->setDiffuseColour(0.75, 0.75, 0.75);
+    foco->setSpotlightInnerAngle(Ogre::Degree(5.0f));
+    foco->setSpotlightOuterAngle(Ogre::Degree(70.0f));
+    foco->setDirection(Ogre::Vector3(1, -1, 0));
+
+    focoNode = mNode->createChildSceneNode("nfoco");
+    focoNode->attachObject(foco);
 }
 
 Avion::~Avion()
@@ -279,6 +291,19 @@ void Avion::frameRendered(const Ogre::FrameEvent& evt)
     mNode->getChild("heliceD")->roll(Ogre::Degree(-8));
     rot++;
     //Movimiento
-    mNode->setPosition(-sin(rot / 180 * PI) * 200,150, cos(rot / 180 * PI) * 200);
+    mNode->setPosition(-sin(rot / 180 * PI) * 200, 150, cos(rot / 180 * PI) * 200);
     mNode->yaw(Ogre::Degree(-1));
+}
+
+Sinbad::Sinbad(Ogre::SceneNode* node) : EntidadIG(node)
+{
+    //Sinbad
+    Ogre::SceneNode* sinbad = node->createChildSceneNode("sinbadBody");
+    Ogre::Entity* sinbadMesh = mSM->createEntity("Sinbad.mesh");
+    sinbad->attachObject(sinbadMesh);
+    sinbad->setScale(15, 15, 15);
+}
+
+Sinbad::~Sinbad()
+{
 }

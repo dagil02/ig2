@@ -83,4 +83,17 @@ public:
 
 protected:
     float rot;
+    Ogre::SceneNode* focoNode = nullptr;
+    Light* foco;
+};
+
+class Sinbad : public EntidadIG {
+public:
+    Sinbad(Ogre::SceneNode* node);
+    ~Sinbad();
+    bool keyPressed(const OgreBites::KeyboardEvent& evt) { return true; };
+    virtual void frameRendered(const Ogre::FrameEvent& evt) {};
+
+protected:
+
 };

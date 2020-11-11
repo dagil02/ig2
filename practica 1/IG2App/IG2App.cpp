@@ -49,6 +49,7 @@ void IG2App::setup(void)
   addInputListener(mTrayMgr);
 
   addInputListener(this);
+  mSM->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
   setupScene();
 }
 
@@ -77,7 +78,7 @@ void IG2App::setupScene(void)
   Light* luz = mSM->createLight("Luz");
   luz->setType(Ogre::Light::LT_DIRECTIONAL);
   luz->setDiffuseColour(0.75, 0.75, 0.75);
-
+  luz->setCastShadows(false);
   mLightNode = mSM->getRootSceneNode()->createChildSceneNode("nLuz");
   mLightNode->attachObject(luz);
 
@@ -121,11 +122,9 @@ void IG2App::setupScene(void)
   plano3Node->translate(-400, 1, 250);
 
   //Sinbad
-  Ogre::SceneNode* sinbad = mSM->getRootSceneNode()->createChildSceneNode("sinbad");
-  Ogre::Entity* sinbadMesh = mSM->createEntity("Sinbad.mesh");
-  sinbad->attachObject(sinbadMesh);
-  sinbad->setScale(15, 15, 15);
-  sinbad->setPosition(-400, 75, 250);
+  Ogre::SceneNode* sinbadNode = mSM->getRootSceneNode()->createChildSceneNode("sinbad");
+  Sinbad* sinbad = new Sinbad(sinbadNode);
+  sinbadNode->translate(-400, 75, 250);
 
   //------------------------------------------------------------------------
 
