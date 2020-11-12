@@ -11,6 +11,7 @@ AspasMolino::AspasMolino(int num_aspas, std::string name = "molinoAspas", Ogre::
     //Creacion centro apartado 9
     centroNode = mNode->createChildSceneNode(name + "centro");
     Ogre::Entity* ent = mSM->createEntity("Barrel.mesh");
+    ent->setMaterialName("metal");
     centroNode->attachObject(ent);
     centroNode->setScale(15, 10, 15);
     centroNode->pitch(Ogre::Degree(90));
@@ -45,11 +46,13 @@ Aspa::Aspa(std::string id, Ogre::SceneNode*& node) : EntidadIG(node)
 {
 
     Ogre::Entity* tab = mSM->createEntity("cube.mesh");
+    tab->setMaterialName("marron");
     tableroNode = mNode->createChildSceneNode("tablero_" + id);
     tableroNode->attachObject(tab);
 
     Ogre::Entity* cil = mSM->createEntity("Barrel.mesh");
     cilindroNode = mNode->createChildSceneNode("adorno_" + id);
+    cil->setMaterialName("celeste");
     cilindroNode->attachObject(cil);
 
     tableroNode->setScale(0.7, 4, 0.1);
@@ -69,12 +72,14 @@ Molino::Molino(int num_aspas, Ogre::SceneNode* node): EntidadIG(node)
     //cilindro
     cuerpoNode = mNode->createChildSceneNode("cuerpoMolino");
     Ogre::Entity* ent = mSM->createEntity("Barrel.mesh");
+    ent->setMaterialName("paredPiedra");
     cuerpoNode->attachObject(ent);
     cuerpoNode->setPosition(0, -220, 0);
     cuerpoNode->setScale(75, 100, 75);
     //esfera
     esferaNode = mNode->createChildSceneNode("cilindro");
     ent = mSM->createEntity("sphere.mesh");
+    ent->setMaterialName("amarillo");
     esferaNode->attachObject(ent);
     esferaNode->setPosition(0, 80, 0);
     esferaNode->setScale(1.8, 1.8, 1.8);
@@ -214,12 +219,14 @@ Avion::Avion(Ogre::SceneNode* node) : EntidadIG(node)
         /*Cuerpo*/
     Ogre::SceneNode* cuerpoNode = mNode->createChildSceneNode("cuerpo");
     Ogre::Entity* cuerpo = mSM->createEntity("sphere.mesh");
+    cuerpo->setMaterialName("rojo");
     mNode->attachObject(cuerpo);
     cuerpoNode->setScale(0.5, 0.5, 0.5);
 
         /*Frente*/
     Ogre::SceneNode* frenteNode = mNode->createChildSceneNode("frente");
     Ogre::Entity* frente = mSM->createEntity("Barrel.mesh");
+    frente->setMaterialName("naranja");
     frenteNode->attachObject(frente);
     frenteNode->setScale(10, 5, 10);
     frenteNode->pitch(Ogre::Degree(90));
@@ -228,6 +235,7 @@ Avion::Avion(Ogre::SceneNode* node) : EntidadIG(node)
         /*Piloto*/
     Ogre::SceneNode* pilotoNode = mNode->createChildSceneNode("piloto");
     Ogre::Entity* piloto = mSM->createEntity("ninja.mesh");
+    piloto->setMaterialName("amarillo");
     pilotoNode->attachObject(piloto);
     pilotoNode->setScale(0.5, 0.5, 0.5);
     pilotoNode->yaw(Ogre::Degree(180));
@@ -236,12 +244,14 @@ Avion::Avion(Ogre::SceneNode* node) : EntidadIG(node)
         /*Alas*/
     Ogre::SceneNode* alaINode = mNode->createChildSceneNode("alaI");
     Ogre::Entity* alaI = mSM->createEntity("cube.mesh");
+    alaI->setMaterialName("tiles");
     alaINode->attachObject(alaI);
     alaINode->setScale(2, 0.1, 1);
     alaINode->setPosition(-180, 0, 0);
 
     Ogre::SceneNode* alaDNode = mNode->createChildSceneNode("alaD");
     Ogre::Entity* alaD = mSM->createEntity("cube.mesh");
+    alaD->setMaterialName("tiles");
     alaDNode->attachObject(alaD);
     alaDNode->setScale(2, 0.1, 1);
     alaDNode->setPosition(180, 0, 0);
@@ -295,15 +305,3 @@ void Avion::frameRendered(const Ogre::FrameEvent& evt)
     mNode->yaw(Ogre::Degree(-1));
 }
 
-Sinbad::Sinbad(Ogre::SceneNode* node) : EntidadIG(node)
-{
-    //Sinbad
-    Ogre::SceneNode* sinbad = node->createChildSceneNode("sinbadBody");
-    Ogre::Entity* sinbadMesh = mSM->createEntity("Sinbad.mesh");
-    sinbad->attachObject(sinbadMesh);
-    sinbad->setScale(15, 15, 15);
-}
-
-Sinbad::~Sinbad()
-{
-}

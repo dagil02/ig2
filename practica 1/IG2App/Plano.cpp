@@ -10,3 +10,8 @@ Plano::Plano(Ogre::SceneNode* nodo, std::string name = "mPlane1080x800") : Entid
 	mNode->attachObject(plane);
 
 }
+
+void Plano::setMaterial(std::string name)
+{
+	plane->setMaterialName(name);
+}

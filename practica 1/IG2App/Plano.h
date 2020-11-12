@@ -13,7 +13,7 @@ public:
 	~Plano() {};
 
 	bool keyPressed(const OgreBites::KeyboardEvent& evt) { return true; };
-
+	void setMaterial(std::string name);
 protected:
 
 	Entity* plane = nullptr;

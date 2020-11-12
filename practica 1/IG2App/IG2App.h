@@ -7,6 +7,7 @@
 #include "Elements.h"
 #include <vector>
 #include "Plano.h"
+#include "Sinbad.h"
 
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener 
 {

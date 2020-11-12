@@ -91,6 +91,7 @@ void IG2App::setupScene(void)
   //Plano de la escena
   Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("plano");
   Plano* plano = new Plano(planoNode, "Suelo");
+  plano->setMaterial("plano");
 
   //Molino
   num = 12; //numero aspas molino
@@ -106,6 +107,7 @@ void IG2App::setupScene(void)
   Plano* plano2 = new Plano(plano2Node, "planoMolino");
   plano2Node->setScale(0.25, 1, 0.25);
   plano2Node->translate(400, 1, -250);
+  plano2->setMaterial("naranja");
 
   //Avion
   Ogre::SceneNode* avionNode = mSM->getRootSceneNode()->createChildSceneNode("avion");
@@ -120,6 +122,7 @@ void IG2App::setupScene(void)
   Plano* plano3 = new Plano(plano3Node, "planoSinbad");
   plano3Node->setScale(0.25, 1, 0.25);
   plano3Node->translate(-400, 1, 250);
+  plano3->setMaterial("rojo");
 
   //Sinbad
   Ogre::SceneNode* sinbadNode = mSM->getRootSceneNode()->createChildSceneNode("sinbad");
