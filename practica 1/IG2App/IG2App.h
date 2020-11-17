@@ -32,6 +32,7 @@ protected:
   Ogre::SceneNode* tableroNode = nullptr;
   Ogre::SceneNode* cilindroNode = nullptr;
   Ogre::SceneNode* planoNode = nullptr;
+  Ogre::SceneNode* cabeza = nullptr;
   OgreBites::CameraMan* mCamMgr = nullptr;
   //Apartado 5
   //AspasMolino* molinoAspas = nullptr;

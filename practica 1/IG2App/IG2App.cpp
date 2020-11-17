@@ -129,6 +129,13 @@ void IG2App::setupScene(void)
   Sinbad* sinbad = new Sinbad(sinbadNode);
   sinbadNode->translate(-400, 75, 250);
 
+  //Cabeza
+  cabeza = mSM->getRootSceneNode()->createChildSceneNode("cabeza");
+  Ogre::Entity* ent = mSM->createEntity("sphere.mesh");
+  ent->setMaterialName("cabeza");
+  cabeza->attachObject(ent);
+  cabeza->setScale(0.2, 0.2, 0.2);
+  cabeza->translate(480,20,-200);
   //------------------------------------------------------------------------
 
   mCamMgr = new OgreBites::CameraMan(mCamNode);

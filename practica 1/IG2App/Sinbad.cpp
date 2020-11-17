@@ -7,8 +7,7 @@ Sinbad::Sinbad(Ogre::SceneNode* node) : EntidadIG(node)
 	cuerpo = mNode->createChildSceneNode();
 	cuerpoMesh = mSM->createEntity("Sinbad.mesh");
 	cuerpo->attachObject(cuerpoMesh);
-	cuerpo->setPosition(0, 1, 0);
-	mNode->setScale(20, 20, 20);
+	mNode->setScale(15, 15, 15);
 	
 }
 
