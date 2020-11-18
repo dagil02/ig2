@@ -9,7 +9,8 @@ Sinbad::Sinbad(Ogre::SceneNode* node) : EntidadIG(node)
 	cuerpoMesh = mSM->createEntity("Sinbad.mesh");
 	cuerpo->attachObject(cuerpoMesh);
 	mNode->setScale(15, 15, 15);
-	
+	mNode->setPosition(-400, 75, 250);
+	mNode->setInitialState();
 
 
 	// DANCE
@@ -34,6 +35,38 @@ Sinbad::Sinbad(Ogre::SceneNode* node) : EntidadIG(node)
 
 	cuerpoMesh->attachObjectToBone("Handle.R", right);
 	cuerpoMesh->attachObjectToBone("Handle.L", left);
+
+	//Andar al centro
+	Animation* animation = mSM->createAnimation("caminaAguas", duracion);
+	NodeAnimationTrack* track = animation->createNodeTrack(0);
+	track->setAssociatedNode(mNode);
+
+	animationState = mSM->createAnimationState("caminaAguas");
+	animationState->setLoop(true);
+	animationState->setEnabled(!dancing);
+
+	Real durPaso = duracion / 2.0;
+	Vector3  keyframePos(0, 0, 0);
+	Vector3 src(0, 0, 1);
+
+	TransformKeyFrame* kf;  // 4 keyFrames: origen(0), abajo, arriba, origen(3)
+
+	kf = track->createNodeKeyFrame(0);  // Keyframe0: origen
+	
+
+	kf = track->createNodeKeyFrame(durPaso * 1);  // Keyframe1: al centro
+	keyframePos += Vector3(400, 0, -250);
+	kf->setTranslate(keyframePos);
+	
+
+	kf = track->createNodeKeyFrame(durPaso * 2); // Keyframe2: regreso
+	keyframePos += Vector3(-400, 0, 250);
+	kf->setTranslate(keyframePos);
+
+	kf = track->createNodeKeyFrame(0);  // Keyframe3:   origen
+	
+
+	animation->setInterpolationMode(Ogre::Animation::IM_SPLINE);
 }
 
 
@@ -44,6 +77,7 @@ void Sinbad::frameRendered(const Ogre::FrameEvent& evt)
 	else {
 		runBase->addTime(evt.timeSinceLastFrame);
 		runTop->addTime(evt.timeSinceLastFrame);
+		animationState->addTime(evt.timeSinceLastFrame);
 	}
 }
 
@@ -65,6 +99,7 @@ void Sinbad::swapAnim()
 	dance->setEnabled(dancing);
 	runTop->setEnabled(!dancing);
 	runBase->setEnabled(!dancing);
+	animationState->setEnabled(!dancing);
 }
 
 void Sinbad::swapEspadas()

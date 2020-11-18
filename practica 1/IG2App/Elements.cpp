@@ -356,28 +356,33 @@ Boya::Boya(Ogre::SceneNode* node) : EntidadIG(node)
     Animation* animation = mSM->createAnimation("animVV", duracion); 
     NodeAnimationTrack* track = animation->createNodeTrack(0); 
     track->setAssociatedNode(mNode); 
-    Vector3  keyframePos(-10., 0., 100.); 
-    Real durPaso = duracion / 4.0;  // uniformes
-    TransformKeyFrame* kf;              // 5 keyFrames: origen(0), arriba, origen, abajo, origen(4)
-    kf= track-> createNodeKeyFrame(durPaso* 0);  // Keyframe0:   origen
-    kf-> setTranslate(keyframePos); 
-
-    animationState = mSM->createAnimationState("animVV"); 
-    animationState->setLoop(true); 
+    
+    animationState = mSM->createAnimationState("animVV");
+    animationState->setLoop(true);
     animationState->setEnabled(true);
 
-    kf = track->createNodeKeyFrame(durPaso * 1); // Keyframe1: arriba
-    keyframePos+=Ogre::Vector3::UNIT_Y * longDesplazamiento;
-    kf-> setTranslate(keyframePos); // Arriba// Keyframe2: origen ....
-    kf = track-> createNodeKeyFrame(durPaso* 3);  // Keyframe3: abajo
+    Real durPaso = duracion / 4.0;
+    Vector3  keyframePos(0.0);
+    Vector3 src(0, 0, 1);
+
+    TransformKeyFrame* kf;  // 4 keyFrames: origen(0), abajo, arriba, origen(3)
+
+    kf = track-> createNodeKeyFrame(durPaso* 0);  // Keyframe0: origen
+
+    kf = track-> createNodeKeyFrame(durPaso* 1);   // Keyframe1: abajo
     keyframePos+=Ogre::Vector3::NEGATIVE_UNIT_Y * longDesplazamiento;
-    kf-> setTranslate(keyframePos); // Abajo
-    kf = track-> createNodeKeyFrame(durPaso* 4); // Keyframe4: origen
-    keyframePos+=Ogre::Vector3::UNIT_Y * longDesplazamiento;
-    kf-> setTranslate(keyframePos); // Origen
+    kf-> setTranslate(keyframePos); // Abajo  
+    kf-> setRotation(src.getRotationTo(Vector3(1, 0, 1))); // Yaw(45) 
+
+    kf = track-> createNodeKeyFrame(durPaso* 3); // Keyframe2: arriba
+    keyframePos+=Ogre::Vector3::UNIT_Y * longDesplazamiento * 2;
+    kf-> setTranslate(keyframePos);  // Arriba
+    kf-> setRotation(src.getRotationTo(Vector3(-1, 0, 1)));  // Yaw(-45)
+
+    kf = track-> createNodeKeyFrame(durPaso* 4);  // Keyframe3:   origen
+
 
     animation->setInterpolationMode(Ogre::Animation::IM_SPLINE);
-
 }
 
 void Boya::frameRendered(const Ogre::FrameEvent& evt)

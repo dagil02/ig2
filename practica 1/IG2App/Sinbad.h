@@ -21,7 +21,7 @@ protected:
 	AnimationState* runBase = nullptr;
 	AnimationState* runTop = nullptr;
 	AnimationState* dance = nullptr;
-	bool dancing = true;
+	bool dancing = false;
 	bool derecha = true;
 
 	//Espada
@@ -39,5 +39,8 @@ public:
 
 	bool keyPressed(const OgreBites::KeyboardEvent& evt);
 
+private:
+	float duracion = 8;
+	AnimationState* animationState = nullptr;
 };
 

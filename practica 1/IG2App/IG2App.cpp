@@ -130,7 +130,6 @@ void IG2App::setupScene(void)
   //Sinbad
   Ogre::SceneNode* sinbadNode = mSM->getRootSceneNode()->createChildSceneNode("sinbad");
   Sinbad* sinbad = new Sinbad(sinbadNode);
-  sinbadNode->translate(-400, 75, 250);
   addInputListener(sinbad);
   EntidadIG::addListener(sinbad);
 
