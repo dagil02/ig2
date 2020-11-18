@@ -18,3 +18,9 @@ void EntidadIG::frameRendered(const Ogre::FrameEvent& evt)
 {
 	Ogre::Real time = evt.timeSinceLastFrame;
 }
+
+void EntidadIG::sendEvent(messages msg)
+{
+	for (EntidadIG* e : appListeners)
+		e->receiveEvent(msg);
+}

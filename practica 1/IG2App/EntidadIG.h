@@ -19,9 +19,12 @@ public:
 	//Vector estático de listeners
 	static std::vector<EntidadIG*> appListeners;
 
+	enum messages {STOP};
+
 	static void addListener(EntidadIG* entidad) {
 		appListeners.push_back(entidad);
 	};
+	static void sendEvent(messages msg);
 	SceneNode* getNode() { return mNode; }
 
 protected:
@@ -31,10 +34,11 @@ protected:
 
 	virtual void frameRendered(const Ogre::FrameEvent& evt);
 
-	virtual bool keyPressed(const OgreBites::KeyboardEvent & evt)
+	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt)
 	{
 		return false;
 	};
 
+	virtual void receiveEvent(messages msg) {};
 };
 

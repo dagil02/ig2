@@ -2,6 +2,7 @@
 
 #include <OgreInput.h>
 #include <SDL_keycode.h>
+#include <iostream>
 
 AspasMolino::AspasMolino(int num_aspas, std::string name = "molinoAspas", Ogre::SceneNode* node = nullptr) : EntidadIG (node)
 {
@@ -27,6 +28,8 @@ AspasMolino::AspasMolino(int num_aspas, std::string name = "molinoAspas", Ogre::
         aspasList[i]->cilindroNode->roll(Ogre::Degree(i * 360 / numAspas));
         aspasList[i]->getNode()->setPosition(sin(i * (2 * PI / numAspas)) * 200, cos(i * (2 * PI / numAspas)) * 200, 0);
     }
+
+    addListener(this);
 }
 
 void AspasMolino::swapCilindro()
@@ -38,6 +41,16 @@ void AspasMolino::swapCilindro()
     }
     else {
         centroNode->setPosition(0, 0, -50);
+    }
+}
+
+void AspasMolino::receiveEvent(messages msg)
+{
+    if (msg == STOP) {
+        active = !active;
+        for (int i = 0; i < numAspas; i++) {
+            aspasList[i]->cilindroNode->setVisible(active);
+        }
     }
 }
 
@@ -78,9 +91,9 @@ Molino::Molino(int num_aspas, Ogre::SceneNode* node): EntidadIG(node)
     cuerpoNode->setScale(75, 100, 75);
     //esfera
     esferaNode = mNode->createChildSceneNode("cilindro");
-    ent = mSM->createEntity("sphere.mesh");
-    ent->setMaterialName("amarillo");
-    esferaNode->attachObject(ent);
+    techoMesh = mSM->createEntity("sphere.mesh");
+    techoMesh->setMaterialName("amarillo");
+    esferaNode->attachObject(techoMesh);
     esferaNode->setPosition(0, 80, 0);
     esferaNode->setScale(1.8, 1.8, 1.8);
 
@@ -108,11 +121,23 @@ bool Molino::keyPressed(const OgreBites::KeyboardEvent& evt)
 
 void Molino::frameRendered(const Ogre::FrameEvent& evt)
 {
-    aspas->getNode()->roll(Ogre::Degree(1));
+    if (active) {
+        aspas->getNode()->roll(Ogre::Degree(1));
 
-    for (int i = 0; i < numAspas; i++) {
+        for (int i = 0; i < numAspas; i++) {
 
-        aspas->aspasList[i]->cilindroNode->roll(Ogre::Degree(-1));
+            aspas->aspasList[i]->cilindroNode->roll(Ogre::Degree(-1));
+        }
+    }
+}
+
+void Molino::receiveEvent(messages msg)
+{
+    if (msg == STOP) {
+        active = !active;
+        if (active) {
+            techoMesh->setMaterialName("amarillo");
+        }else techoMesh->setMaterialName("rojo");
     }
 }
 
@@ -296,12 +321,66 @@ bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 
 void Avion::frameRendered(const Ogre::FrameEvent& evt)
 {
+
     //Helices
     mNode->getChild("heliceI")->roll(Ogre::Degree(-8));
     mNode->getChild("heliceD")->roll(Ogre::Degree(-8));
-    rot++;
-    //Movimiento
-    mNode->setPosition(-sin(rot / 180 * PI) * 200, 150, cos(rot / 180 * PI) * 200);
-    mNode->yaw(Ogre::Degree(-1));
+    
+
+    if (active) {
+        //Movimiento
+        mNode->setPosition(-sin(rot / 180 * PI) * 200, 150, cos(rot / 180 * PI) * 200);
+        mNode->yaw(Ogre::Degree(-1));
+        rot++;
+    }
 }
 
+void Avion::receiveEvent(messages msg)
+{
+    foco->setVisible(active);
+
+    if (msg == STOP) {
+        active = !active;
+        foco->setVisible(active);
+    }
+}
+
+Boya::Boya(Ogre::SceneNode* node) : EntidadIG(node)
+{
+    Ogre::Entity* boya = mSM->createEntity("Barrel.mesh");
+    boya->setMaterialName("tiles");
+    mNode->attachObject(boya);
+    mNode->setScale(15, 15, 15);
+    mNode->setInitialState();
+
+    Animation* animation = mSM->createAnimation("animVV", duracion); 
+    NodeAnimationTrack* track = animation->createNodeTrack(0); 
+    track->setAssociatedNode(mNode); 
+    Vector3  keyframePos(-10., 0., 100.); 
+    Real durPaso = duracion / 4.0;  // uniformes
+    TransformKeyFrame* kf;              // 5 keyFrames: origen(0), arriba, origen, abajo, origen(4)
+    kf= track-> createNodeKeyFrame(durPaso* 0);  // Keyframe0:   origen
+    kf-> setTranslate(keyframePos); 
+
+    animationState = mSM->createAnimationState("animVV"); 
+    animationState->setLoop(true); 
+    animationState->setEnabled(true);
+
+    kf = track->createNodeKeyFrame(durPaso * 1); // Keyframe1: arriba
+    keyframePos+=Ogre::Vector3::UNIT_Y * longDesplazamiento;
+    kf-> setTranslate(keyframePos); // Arriba// Keyframe2: origen ....
+    kf = track-> createNodeKeyFrame(durPaso* 3);  // Keyframe3: abajo
+    keyframePos+=Ogre::Vector3::NEGATIVE_UNIT_Y * longDesplazamiento;
+    kf-> setTranslate(keyframePos); // Abajo
+    kf = track-> createNodeKeyFrame(durPaso* 4); // Keyframe4: origen
+    keyframePos+=Ogre::Vector3::UNIT_Y * longDesplazamiento;
+    kf-> setTranslate(keyframePos); // Origen
+
+    animation->setInterpolationMode(Ogre::Animation::IM_SPLINE);
+
+}
+
+void Boya::frameRendered(const Ogre::FrameEvent& evt)
+{
+    animationState->addTime(evt.timeSinceLastFrame);
+}

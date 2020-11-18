@@ -14,7 +14,10 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	if (evt.keysym.sym == SDLK_ESCAPE)
     {
 	 getRoot()->queueEndRendering();
-    }
+	}
+	else if (evt.keysym.sym == SDLK_r) {
+		EntidadIG::sendEvent(EntidadIG::STOP);
+	}
     return true;
 }
 
@@ -128,6 +131,8 @@ void IG2App::setupScene(void)
   Ogre::SceneNode* sinbadNode = mSM->getRootSceneNode()->createChildSceneNode("sinbad");
   Sinbad* sinbad = new Sinbad(sinbadNode);
   sinbadNode->translate(-400, 75, 250);
+  addInputListener(sinbad);
+  EntidadIG::addListener(sinbad);
 
   //Cabeza
   cabeza = mSM->getRootSceneNode()->createChildSceneNode("cabeza");
@@ -136,6 +141,13 @@ void IG2App::setupScene(void)
   cabeza->attachObject(ent);
   cabeza->setScale(0.2, 0.2, 0.2);
   cabeza->translate(480,20,-200);
+
+
+  //Boya
+  Ogre::SceneNode* boyaNode = mSM->getRootSceneNode()->createChildSceneNode("boya");
+  Boya* boya = new Boya(boyaNode);
+  addInputListener(boya);
+  EntidadIG::addListener(boya);
   //------------------------------------------------------------------------
 
   mCamMgr = new OgreBites::CameraMan(mCamNode);

@@ -15,7 +15,8 @@ public:
 	bool keyPressed(const OgreBites::KeyboardEvent& evt) { return true; };
 	void setMaterial(std::string name);
 protected:
-
+	void receiveEvent(messages msg);
+	bool active = true;
 	Entity* plane = nullptr;
 };
 
