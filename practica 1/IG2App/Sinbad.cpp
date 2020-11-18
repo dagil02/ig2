@@ -43,28 +43,25 @@ Sinbad::Sinbad(Ogre::SceneNode* node) : EntidadIG(node)
 
 	animationState = mSM->createAnimationState("caminaAguas");
 	animationState->setLoop(true);
-	animationState->setEnabled(!dancing);
+	animationState->setEnabled(true);
 
 	Real durPaso = duracion / 2.0;
 	Vector3  keyframePos(0, 0, 0);
-	Vector3 src(0, 0, 1);
-
+		
 	TransformKeyFrame* kf;  // 4 keyFrames: origen(0), abajo, arriba, origen(3)
 
 	kf = track->createNodeKeyFrame(0);  // Keyframe0: origen
-	
+
 
 	kf = track->createNodeKeyFrame(durPaso * 1);  // Keyframe1: al centro
 	keyframePos += Vector3(400, 0, -250);
 	kf->setTranslate(keyframePos);
-	
 
 	kf = track->createNodeKeyFrame(durPaso * 2); // Keyframe2: regreso
 	keyframePos += Vector3(-400, 0, 250);
 	kf->setTranslate(keyframePos);
 
 	kf = track->createNodeKeyFrame(0);  // Keyframe3:   origen
-	
 
 	animation->setInterpolationMode(Ogre::Animation::IM_SPLINE);
 }
@@ -99,7 +96,6 @@ void Sinbad::swapAnim()
 	dance->setEnabled(dancing);
 	runTop->setEnabled(!dancing);
 	runBase->setEnabled(!dancing);
-	animationState->setEnabled(!dancing);
 }
 
 void Sinbad::swapEspadas()
