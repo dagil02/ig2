@@ -147,6 +147,7 @@ void IG2App::setupScene(void)
   Boya* boya = new Boya(boyaNode);
   addInputListener(boya);
   EntidadIG::addListener(boya);
+  boyaNode->setVisible(false);
   //------------------------------------------------------------------------
 
   mCamMgr = new OgreBites::CameraMan(mCamNode);

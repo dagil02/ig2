@@ -42,5 +42,6 @@ public:
 private:
 	float duracion = 8;
 	AnimationState* animationState = nullptr;
+	Vector3 initPos;
 };
 
