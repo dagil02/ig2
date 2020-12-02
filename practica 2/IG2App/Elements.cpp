@@ -2,6 +2,7 @@
 
 #include <OgreInput.h>
 #include <SDL_keycode.h>
+#include <OgreParticleSystem.h>
 #include <iostream>
 
 AspasMolino::AspasMolino(int num_aspas, std::string name = "molinoAspas", Ogre::SceneNode* node = nullptr) : EntidadIG (node)
@@ -321,11 +322,28 @@ Avion::Avion(Ogre::SceneNode* node) : EntidadIG(node)
     cartelNode->translate(0, 0, -300);
     cartelNode->attachObject(bbSet);
 
-    
+    //Explosion
+    explosionNode = mNode->createChildSceneNode("nExplosion");
+    explosionSys = mSM->createParticleSystem("psExplosion", "IG2App/Explosion");
+    explosionNode->attachObject(explosionSys);
+
+    explosionSys->setEmitting(false);
+    explosionNode->setVisible(false);
 }
 
 Avion::~Avion()
 {
+    delete focoNode;
+    delete foco;
+    delete bbSet;
+    delete explosionSys;
+    delete explosionNode;
+
+    bbSet = nullptr;
+    focoNode = nullptr;
+    explosionSys = nullptr;
+    foco = nullptr;
+    explosionNode = nullptr;
 }
 
 bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
@@ -351,12 +369,16 @@ void Avion::frameRendered(const Ogre::FrameEvent& evt)
 
 void Avion::receiveEvent(messages msg)
 {
-    foco->setVisible(active);
+    //foco->setVisible(active);
 
     if (msg == STOP) {
         active = !active;
         foco->setVisible(active);
         mNode->setVisible(active);
+
+        //Explosion
+        explosionNode->setVisible(!active);
+        explosionSys->setEmitting(!active);    
     }
 }
 

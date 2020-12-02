@@ -99,7 +99,11 @@ protected:
     Ogre::SceneNode* focoNode = nullptr;
     Light* foco;
     bool active = true;
+
+    //Particles
     Ogre::BillboardSet* bbSet = nullptr;
+    Ogre::SceneNode* explosionNode = nullptr;
+    ParticleSystem* explosionSys = nullptr;
 };
 
 class Boya : public EntidadIG {
