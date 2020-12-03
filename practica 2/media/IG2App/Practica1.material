@@ -1,4 +1,3 @@
-
 material plano {
 	technique { // first, preferred technique
 		pass { // first pass
@@ -8,6 +7,7 @@ material plano {
 			texture_unit {
 				texture Water02.jpg
 				colour_op modulate
+				scroll_anim -0.1 0.0
 			}
 		}
 	}
@@ -171,6 +171,28 @@ material cartel {
 			texture_unit {
 				texture 10points.png
 				tex_address_mode clamp
+			}
+		}
+	}
+}
+
+material space {
+	technique { // first, preferred technique
+		pass { // first pass
+			diffuse 1.0 1.0 1.0
+			ambient 0.5 0.5 0.5
+			specular 0.0 0.0 0.0 0.0
+			
+			
+			texture_unit {
+				texture spaceSky.jpg
+				colour_op modulate
+				rotate_anim 0.01
+			}
+			
+			texture_unit {
+				texture lightMap.jpg
+				colour_op add
 			}
 		}
 	}

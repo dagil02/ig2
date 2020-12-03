@@ -72,7 +72,7 @@ void IG2App::setupScene(void)
   
   // and tell it to render into the main window
   Viewport* vp = getRenderWindow()->addViewport(cam);
-  vp->setBackgroundColour(Ogre::ColourValue(0.7, 0.8, 0.9));
+  vp->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
 
   //------------------------------------------------------------------------
 
@@ -91,10 +91,19 @@ void IG2App::setupScene(void)
 
   // finally something to render
 
+  //Skyplane
+  mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -200),
+      "space", 3, 1, true, 1.0, 100, 100);
+
+  //skyplane plano
+  //mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -200),
+     // "space", 3, 1, true, 0.0, 100, 100);
+
   //Plano de la escena
   Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("plano");
   Plano* plano = new Plano(planoNode, "Suelo");
   plano->setMaterial("plano");
+  plano->setReflejo(cam);
 
   //Molino
   num = 12; //numero aspas molino
