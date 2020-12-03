@@ -21,8 +21,11 @@ protected:
 	AnimationState* runBase = nullptr;
 	AnimationState* runTop = nullptr;
 	AnimationState* dance = nullptr;
+	AnimationState* death = nullptr;
+
 	bool dancing = false;
 	bool derecha = true;
+	bool death_state = false;
 
 	//Espada
 	Ogre::Entity* right = nullptr;
@@ -41,7 +44,9 @@ public:
 
 private:
 	float duracion = 8;
+	float die_duration = 1;
 	AnimationState* animationState = nullptr;
+	AnimationState* die = nullptr;
 	Vector3 initPos;
 };
 

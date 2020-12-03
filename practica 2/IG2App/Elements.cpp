@@ -329,6 +329,13 @@ Avion::Avion(Ogre::SceneNode* node) : EntidadIG(node)
 
     explosionSys->setEmitting(false);
     explosionNode->setVisible(false);
+
+    //Trail
+    Ogre::SceneNode* trailNode = mNode->createChildSceneNode("trailN");
+    ParticleSystem* trail = mSM->createParticleSystem("psTrail", "IG2App/SmokeTrail");
+    trailNode->attachObject(trail);
+
+    trail->setEmitting(true);
 }
 
 Avion::~Avion()
