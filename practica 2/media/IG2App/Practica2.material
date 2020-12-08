@@ -17,3 +17,127 @@ material IG2App/Smoke
 		}
 	}
 }
+
+
+material space {
+	technique { // first, preferred technique
+		pass { // first pass
+			diffuse 1.0 1.0 1.0
+			ambient 0.5 0.5 0.5
+			specular 0.0 0.0 0.0 0.0
+			
+			
+			texture_unit {
+				texture spaceSky.jpg
+				colour_op modulate
+				rotate_anim 0.01
+			}
+			
+			texture_unit {
+				texture lightMap.jpg
+				colour_op add
+			}
+		}
+	}
+}
+
+
+vertex_program SpaceVS glsl
+{
+	source SpaceVS.glsl
+	default_params
+	{
+		param_named_auto modelViewProjMat worldviewproj_matrix
+		param_named_auto tiempo time_0_1 10;
+	}
+}
+
+fragment_program SpaceFS glsl
+{
+	source SpaceFS.glsl
+	default_params
+	{
+		param_named textura0 int 0 
+		param_named textura1 int 1
+		param_named_auto FB sintime_0_2pi 32
+	}
+}
+
+material SpaceGLSL {
+
+	technique { 
+		pass { 
+			vertex_program_ref SpaceVS
+			{	
+			}
+			fragment_program_ref SpaceFS
+			{	
+			}
+			texture_unit texture0 { 
+				texture lightMap.jpg 2d 
+				tex_address_mode clamp 
+				filtering bilinear 
+			}
+			texture_unit texture1 { 
+				texture spaceSky.jpg 2d 
+				tex_address_mode wrap 
+			}			
+			cull_hardware none
+			depth_check off
+			depth_write off
+			
+		}
+	}
+}
+
+vertex_program BoyaVS glsl
+{
+	source BoyaVS.glsl
+	default_params
+	{
+	    param_named_auto modelViewProjMat worldviewproj_matrix
+		param_named_auto model world_matrix
+	}
+}
+
+fragment_program BoyaFS glsl
+{
+	source BoyaFS.glsl
+	default_params
+	{
+		param_named textura0 int 0
+		param_named textura1 int 1
+		param_named InColor float4 0.7 0.25 0.0 1.0
+		param_named OutColor float4 1.0 0.84 0.0 1.0
+		param_named_auto lightPosition light_position 0;
+		param_named_auto lightDiffuse light_diffuse_colour 0;
+		param_named_auto Flipping render_target_flipping 1;
+	}
+}
+
+material BoyaGLSL{
+
+	technique { 
+		pass { 
+			vertex_program_ref BoyaVS
+			{	
+			}
+			fragment_program_ref BoyaFS
+			{	
+			}
+			texture_unit texture0 { 
+				texture BumpyMetal.jpg 2d 
+				tex_address_mode clamp 
+				filtering bilinear 
+			}
+			texture_unit texture1 { 
+				texture corrosion.jpg 2d 
+				tex_address_mode wrap 
+			}			
+			cull_hardware none
+			cull_software none
+			
+		}
+	}
+	
+}

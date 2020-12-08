@@ -99,6 +99,10 @@ void IG2App::setupScene(void)
   //mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -200),
      // "space", 3, 1, true, 0.0, 100, 100);
 
+  //Skyplane GLSL
+ // mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -200),
+  //    "SpaceGLSL", 3, 1, true, 1.0, 100, 100);
+
   //Plano de la escena
   Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("plano");
   Plano* plano = new Plano(planoNode, "Suelo");
@@ -156,7 +160,6 @@ void IG2App::setupScene(void)
   Boya* boya = new Boya(boyaNode);
   addInputListener(boya);
   EntidadIG::addListener(boya);
-  boyaNode->setVisible(false);
   //------------------------------------------------------------------------
 
   mCamMgr = new OgreBites::CameraMan(mCamNode);

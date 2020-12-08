@@ -175,25 +175,3 @@ material cartel {
 		}
 	}
 }
-
-material space {
-	technique { // first, preferred technique
-		pass { // first pass
-			diffuse 1.0 1.0 1.0
-			ambient 0.5 0.5 0.5
-			specular 0.0 0.0 0.0 0.0
-			
-			
-			texture_unit {
-				texture spaceSky.jpg
-				colour_op modulate
-				rotate_anim 0.01
-			}
-			
-			texture_unit {
-				texture lightMap.jpg
-				colour_op add
-			}
-		}
-	}
-}
