@@ -391,10 +391,10 @@ void Avion::receiveEvent(messages msg)
 
 Boya::Boya(Ogre::SceneNode* node) : EntidadIG(node)
 {
-    Ogre::Entity* boya = mSM->createEntity("Barrel.mesh");
-    boya->setMaterialName("tiles");
+    Ogre::Entity* boya = mSM->createEntity("uv_sphere.mesh");
+    boya->setMaterialName("BoyaGLSL");
     mNode->attachObject(boya);
-    mNode->setScale(15, 15, 15);
+    mNode->setScale(0.4, 0.4, 0.4);
     mNode->setInitialState();
 
     Animation* animation = mSM->createAnimation("animVV", duracion); 

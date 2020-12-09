@@ -38,7 +38,7 @@ void main(){
 
 		fFragColor = InColor * vec4(diffuse,1);
 	}
-	if( color1.r > 0.55 ){
+	if( color1.r > 0.5 ){
 		discard;
 	}
 
