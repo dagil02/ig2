@@ -39,6 +39,8 @@ protected:
   //AspasMolino* molinoAspas = nullptr;
 
   bool luminanceEnabled = false;
+  bool kernelEnabled = false;
+
   Viewport* vp = nullptr;
 
   //numero aspas

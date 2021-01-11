@@ -22,6 +22,10 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
         luminanceEnabled = !luminanceEnabled;
         CompositorManager::getSingleton().setCompositorEnabled(vp, "Luminance", luminanceEnabled);
     }
+    else if (evt.keysym.sym == SDLK_k) {
+        kernelEnabled = !kernelEnabled;
+        CompositorManager::getSingleton().setCompositorEnabled(vp, "EdgeEmboss", kernelEnabled);
+    }
     return true;
 }
 
@@ -176,6 +180,7 @@ void IG2App::setupScene(void)
 
   //Post-procesado
   CompositorManager::getSingleton().addCompositor(vp, "Luminance");
+  CompositorManager::getSingleton().addCompositor(vp, "EdgeEmboss");
 }
 
 

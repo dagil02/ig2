@@ -192,6 +192,7 @@ fragment_program EdgeEmbossFS glsl {
 	source Kernel3x3PS.glsl
 	default_params{
 		param_named RTT0 int 0
+		param_named kernel float9 -4 -2 0 -2 1 2 0 2 4
 	}
 }
 
@@ -203,9 +204,11 @@ material EdgeEmbossPS {
 			vertex_program_ref EdgeEmbossVS {
 			}
 			fragment_program_ref EdgeEmbossFS {
+			//param_named kernel float9 -4 -2 0 -2 1 2 0 2 4
 			}
 			texture_unit RTT0{
 				filtering none
+				//tex_address_mode clamp
 			}
 		}
 	}
