@@ -142,3 +142,71 @@ material BoyaGLSL{
 	}
 	
 }
+
+
+vertex_program LuminanceVS glsl
+{
+	source RenderQuadVS.glsl
+	default_params
+	{
+	    param_named_auto modelViewProjMat worldviewproj_matrix
+		param_named_auto model world_matrix
+	}
+}
+
+fragment_program LuminancePS glsl {
+	source LuminancePS.glsl
+	default_params{
+		param_named RTT0 int 0
+	}
+}
+
+material LuminancePS {
+	technique {
+		pass {
+			depth_check off
+			depth_write off
+			vertex_program_ref LuminanceVS {
+			}
+			fragment_program_ref LuminancePS {
+			}
+			texture_unit RTT0{
+				filtering none
+			}
+		}
+	}
+}
+
+
+vertex_program EdgeEmbossVS glsl
+{
+	source RenderQuadVS.glsl
+	default_params
+	{
+	    param_named_auto modelViewProjMat worldviewproj_matrix
+		param_named_auto model world_matrix
+	}
+}
+
+fragment_program EdgeEmbossFS glsl {
+	source Kernel3x3PS.glsl
+	default_params{
+		param_named RTT0 int 0
+	}
+}
+
+material EdgeEmbossPS {
+	technique {
+		pass {
+			depth_check off
+			depth_write off
+			vertex_program_ref EdgeEmbossVS {
+			}
+			fragment_program_ref EdgeEmbossFS {
+			}
+			texture_unit RTT0{
+				filtering none
+			}
+		}
+	}
+}

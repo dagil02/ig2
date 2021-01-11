@@ -8,6 +8,7 @@
 #include <vector>
 #include "Plano.h"
 #include "Sinbad.h"
+#include <OgreCompositorManager.h>
 
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener 
 {
@@ -36,6 +37,9 @@ protected:
   OgreBites::CameraMan* mCamMgr = nullptr;
   //Apartado 5
   //AspasMolino* molinoAspas = nullptr;
+
+  bool luminanceEnabled = false;
+  Viewport* vp = nullptr;
 
   //numero aspas
   int num = 12; //maximo de 100

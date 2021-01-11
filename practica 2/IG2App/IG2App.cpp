@@ -18,6 +18,10 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	else if (evt.keysym.sym == SDLK_r) {
 		EntidadIG::sendEvent(EntidadIG::STOP);
 	}
+    else if (evt.keysym.sym == SDLK_l) {
+        luminanceEnabled = !luminanceEnabled;
+        CompositorManager::getSingleton().setCompositorEnabled(vp, "Luminance", luminanceEnabled);
+    }
     return true;
 }
 
@@ -71,7 +75,7 @@ void IG2App::setupScene(void)
   mCamNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);  
   
   // and tell it to render into the main window
-  Viewport* vp = getRenderWindow()->addViewport(cam);
+  vp = getRenderWindow()->addViewport(cam);
   vp->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
 
   //------------------------------------------------------------------------
@@ -168,6 +172,10 @@ void IG2App::setupScene(void)
   
   //------------------------------------------------------------------------
 
+
+
+  //Post-procesado
+  CompositorManager::getSingleton().addCompositor(vp, "Luminance");
 }
 
 
