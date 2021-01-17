@@ -109,7 +109,7 @@ fragment_program BoyaFS glsl
 		param_named textura0 int 0;
 		param_named textura1 int 1;
 		param_named InColor float4 0.5 0.5 0.5 1.0;
-		param_named OutColor float4 0.5 0.5 0.5 1.0;
+		param_named OutColor float4 0.0 0.5 0.5 1.0;
 		param_named_auto lightPosition light_position 0;
 		param_named_auto lightDiffuse light_diffuse_colour 0;
 		param_named_auto Flipping render_target_flipping ;
@@ -127,12 +127,12 @@ material BoyaGLSL{
 			{	
 			}
 			texture_unit texture0 { 
-				texture corrosion.jpg 2d 
+				texture BumpyMetal.jpg 2d 
 				tex_address_mode clamp 
 				filtering bilinear 
 			}
 			texture_unit texture1 { 
-				texture BumpyMetal.jpg 2d 
+				texture corrosion.jpg 2d 
 				tex_address_mode wrap 
 			}			
 			cull_hardware none
@@ -144,13 +144,12 @@ material BoyaGLSL{
 }
 
 
-vertex_program LuminanceVS glsl
+vertex_program RenderQuadVS glsl
 {
 	source RenderQuadVS.glsl
 	default_params
 	{
 	    param_named_auto modelViewProjMat worldviewproj_matrix
-		param_named_auto model world_matrix
 	}
 }
 
@@ -166,7 +165,7 @@ material LuminancePS {
 		pass {
 			depth_check off
 			depth_write off
-			vertex_program_ref LuminanceVS {
+			vertex_program_ref RenderQuadVS {
 			}
 			fragment_program_ref LuminancePS {
 			}
@@ -177,22 +176,11 @@ material LuminancePS {
 	}
 }
 
-
-vertex_program EdgeEmbossVS glsl
-{
-	source RenderQuadVS.glsl
-	default_params
-	{
-	    param_named_auto modelViewProjMat worldviewproj_matrix
-		param_named_auto model world_matrix
-	}
-}
-
 fragment_program EdgeEmbossFS glsl {
 	source Kernel3x3PS.glsl
 	default_params{
 		param_named RTT0 int 0
-		param_named kernel float9 -4 -2 0 -2 1 2 0 2 4
+		param_named kernel float9 0 0 0 0 1 0 0 0 0
 	}
 }
 
@@ -201,10 +189,10 @@ material EdgeEmbossPS {
 		pass {
 			depth_check off
 			depth_write off
-			vertex_program_ref EdgeEmbossVS {
+			vertex_program_ref RenderQuadVS {
 			}
 			fragment_program_ref EdgeEmbossFS {
-			//param_named kernel float9 -4 -2 0 -2 1 2 0 2 4
+			param_named kernel float9 -4 -2 0 -2 1 2 0 2 4
 			}
 			texture_unit RTT0{
 				filtering none

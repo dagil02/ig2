@@ -88,12 +88,12 @@ void IG2App::setupScene(void)
 
   Light* luz = mSM->createLight("Luz");
   luz->setType(Ogre::Light::LT_DIRECTIONAL);
-  luz->setDiffuseColour(0.75, 0.75, 0.75);
+  luz->setDiffuseColour(1, 1, 1);
   luz->setCastShadows(false);
   mLightNode = mSM->getRootSceneNode()->createChildSceneNode("nLuz");
   mLightNode->attachObject(luz);
 
-  mLightNode->setDirection(Ogre::Vector3(0, -0.5, -0.5));  
+  mLightNode->setDirection(Ogre::Vector3(0, -1, -1));  
  
   //------------------------------------------------------------------------
 

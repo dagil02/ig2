@@ -20,27 +20,29 @@ void main(){
 	vec3 norm = normalize(vWnormal);
 	vec3 color1 = vec3(texture(textura1, vUv0));
 	
-
-	bool frontFacing = (Flipping > -1)? gl_FrontFacing : !gl_FrontFacing;
-	
-	if(frontFacing){
-		
-		float diff = max(dot(norm,lightPosition),0.0);
-		vec3 diffuse = diff*lightDiffuse;
-		vec3 result0 = diffuse * texture(textura0, vUv0).rgb;
-		
-		fFragColor = OutColor * vec4(result0,1);
-		
-	} else {
-		
-		float diff = max(dot(-norm,lightPosition),0.0);
-		vec3 diffuse = diff*lightDiffuse;
-
-		fFragColor = InColor * vec4(diffuse,1);
-	}
 	if( color1.r > 0.5 ){
 		discard;
 	}
-
+	
+	bool frontFacing = (Flipping > -1)? gl_FrontFacing : !gl_FrontFacing;
+	
+	
+	
+	if(frontFacing){
+		
+		//float diff = max(dot(norm,lightPosition),0.0);
+		//vec3 diffuse = diff*lightDiffuse;
+		//vec3 result0 = diffuse * texture(textura0, vUv0).rgb;
+		
+		//fFragColor = OutColor * vec4(result0,1);
+		fFragColor = OutColor;
+		
+	} else {
+		
+		//float diff = max(dot(-norm,lightPosition),0.0);
+		//vec3 diffuse = diff*lightDiffuse;
+		//vec3 result1 = diffuse * color1;
+		fFragColor = InColor /* vec4(result1,1)*/;
+	}
 	
 }

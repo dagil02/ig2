@@ -300,15 +300,15 @@ Avion::Avion(Ogre::SceneNode* node) : EntidadIG(node)
 
     //Foco
 
-    foco = mSM->createLight("FocoAvion");
-    foco->setType(Ogre::Light::LT_SPOTLIGHT);
-    foco->setDiffuseColour(0.75, 0.75, 0.75);
-    foco->setSpotlightInnerAngle(Ogre::Degree(5.0f));
-    foco->setSpotlightOuterAngle(Ogre::Degree(70.0f));
-    foco->setDirection(Ogre::Vector3(1, -1, 0));
+    //foco = mSM->createLight("FocoAvion");
+    //foco->setType(Ogre::Light::LT_SPOTLIGHT);
+    //foco->setDiffuseColour(0.75, 0.75, 0.75);
+    //foco->setSpotlightInnerAngle(Ogre::Degree(5.0f));
+    //foco->setSpotlightOuterAngle(Ogre::Degree(70.0f));
+    //foco->setDirection(Ogre::Vector3(1, -1, 0));
 
-    focoNode = mNode->createChildSceneNode("nfoco");
-    focoNode->attachObject(foco);
+    //focoNode = mNode->createChildSceneNode("nfoco");
+    //focoNode->attachObject(foco);
 
     //Cartel
     bbSet = mSM->createBillboardSet("Cartel", 1);
