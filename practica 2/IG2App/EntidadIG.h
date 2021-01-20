@@ -19,7 +19,7 @@ public:
 	//Vector estático de listeners
 	static std::vector<EntidadIG*> appListeners;
 
-	enum messages {STOP};
+	enum messages {STOP, BOYA};
 
 	static void addListener(EntidadIG* entidad) {
 		appListeners.push_back(entidad);

@@ -16,7 +16,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	 getRoot()->queueEndRendering();
 	}
 	else if (evt.keysym.sym == SDLK_r) {
-		EntidadIG::sendEvent(EntidadIG::STOP);
+		EntidadIG::sendEvent(EntidadIG::BOYA);
 	}
     else if (evt.keysym.sym == SDLK_l) {
         luminanceEnabled = !luminanceEnabled;

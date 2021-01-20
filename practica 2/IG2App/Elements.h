@@ -112,9 +112,11 @@ public:
     ~Boya() {};
     bool keyPressed(const OgreBites::KeyboardEvent& evt) { return true; };
     virtual void frameRendered(const Ogre::FrameEvent& evt);
-    void receiveEvent(messages msg) {};
+    void receiveEvent(messages msg);
 private:
     float duracion = 8;
     float longDesplazamiento = 40;
     AnimationState* animationState = nullptr;
+    bool explota = false;
+    Ogre::Entity* boya = nullptr;
 };

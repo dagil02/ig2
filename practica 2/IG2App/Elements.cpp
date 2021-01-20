@@ -391,7 +391,7 @@ void Avion::receiveEvent(messages msg)
 
 Boya::Boya(Ogre::SceneNode* node) : EntidadIG(node)
 {
-    Ogre::Entity* boya = mSM->createEntity("uv_sphere.mesh");
+    boya = mSM->createEntity("uv_sphere.mesh");
     boya->setMaterialName("BoyaGLSL");
     mNode->attachObject(boya);
     mNode->setScale(0.4, 0.4, 0.4);
@@ -432,4 +432,17 @@ Boya::Boya(Ogre::SceneNode* node) : EntidadIG(node)
 void Boya::frameRendered(const Ogre::FrameEvent& evt)
 {
     animationState->addTime(evt.timeSinceLastFrame);
+}
+
+void Boya::receiveEvent(messages msg)
+{
+    //foco->setVisible(active);
+
+    if (msg == BOYA) {
+
+        animationState->setEnabled(explota);
+        explota = !explota;
+       if (explota) boya->setMaterialName("ExplotaGLSL");
+       else boya->setMaterialName("BoyaGLSL");
+    }
 }
