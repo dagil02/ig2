@@ -20,7 +20,7 @@ in salidaGS
 
 void main(){
 	vec3 norm = normalize(entrada.vWNormal);
-	vec3 color1 = vec3(texture(textura1, entrada.vUv0));
+	//vec3 color1 = vec3(texture(textura1, entrada.vUv0));
 	
 	bool frontFacing = (Flipping > -1)? gl_FrontFacing : !gl_FrontFacing;
 	
@@ -36,7 +36,7 @@ void main(){
 		
 		float diff = max(dot(-norm,lightPosition),0.0);
 		vec3 diffuse = diff*lightDiffuse;
-		vec3 result1 = diffuse * color1;
+		vec3 result1 = diffuse * texture(textura1, entrada.vUv0).rgb;;
 		fFragColor = InColor * vec4(result1,1);
 	}
 	

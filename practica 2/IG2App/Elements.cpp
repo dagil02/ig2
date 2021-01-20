@@ -93,7 +93,7 @@ Molino::Molino(int num_aspas, Ogre::SceneNode* node): EntidadIG(node)
     //esfera
     esferaNode = mNode->createChildSceneNode("cilindro");
     techoMesh = mSM->createEntity("sphere.mesh");
-    techoMesh->setMaterialName("amarillo");
+    techoMesh->setMaterialName("NormalesGLSL");
     esferaNode->attachObject(techoMesh);
     esferaNode->setPosition(0, 80, 0);
     esferaNode->setScale(1.8, 1.8, 1.8);
@@ -394,7 +394,7 @@ Boya::Boya(Ogre::SceneNode* node) : EntidadIG(node)
     boya = mSM->createEntity("uv_sphere.mesh");
     boya->setMaterialName("BoyaGLSL");
     mNode->attachObject(boya);
-    mNode->setScale(0.4, 0.4, 0.4);
+    mNode->setScale(0.5, 0.5, 0.5);
     mNode->setInitialState();
 
     Animation* animation = mSM->createAnimation("animVV", duracion); 

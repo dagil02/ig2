@@ -60,7 +60,6 @@ void IG2App::setup(void)
   addInputListener(mTrayMgr);
 
   addInputListener(this);
-  mSM->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
   setupScene();
 }
 
@@ -89,7 +88,6 @@ void IG2App::setupScene(void)
   Light* luz = mSM->createLight("Luz");
   luz->setType(Ogre::Light::LT_DIRECTIONAL);
   luz->setDiffuseColour(1, 1, 1);
-  luz->setCastShadows(false);
   mLightNode = mSM->getRootSceneNode()->createChildSceneNode("nLuz");
   mLightNode->attachObject(luz);
 

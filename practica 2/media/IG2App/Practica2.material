@@ -108,8 +108,8 @@ fragment_program BoyaFS glsl
 	{
 		param_named textura0 int 0;
 		param_named textura1 int 1;
-		param_named InColor float4 0.5 0.5 0.5 1.0;
-		param_named OutColor float4 0.0 0.5 0.5 1.0;
+		param_named InColor float4 0.0 0.5 0.5 1.0;
+		param_named OutColor float4 0.5 0.5 0.5 1.0;
 		param_named_auto lightPosition light_position 0;
 		param_named_auto lightDiffuse light_diffuse_colour 0;
 		param_named_auto Flipping render_target_flipping ;
@@ -237,8 +237,8 @@ fragment_program ExplotaFS glsl
 	{
 		param_named textura0 int 0;
 		param_named textura1 int 1;
-		param_named InColor float4 0.5 0.5 0.5 1.0;
-		param_named OutColor float4 0.0 0.5 0.5 1.0;
+		param_named InColor float4 0.0 0.5 0.5 1.0;
+		param_named OutColor float4 0.5 0.5 0.5 1.0;
 		param_named_auto lightPosition light_position 0;
 		param_named_auto lightDiffuse light_diffuse_colour 0;
 		param_named_auto Flipping render_target_flipping ;
@@ -275,4 +275,51 @@ material ExplotaGLSL{
 		}
 	}
 	
+}
+
+vertex_program NormalesVS glsl
+{
+   source NormalesVS.glsl
+   default_params 
+    {
+    }
+}
+
+geometry_program NormalesGS glsl
+{	
+	
+	source NormalesGS.glsl 
+	
+	input_operation_type triangles 
+	output_operation_type line_strip 
+	max_output_vertices 6 
+
+	default_params { 
+
+		param_named_auto modelViewProjMat worldviewproj_matrix
+
+	} 
+} 
+
+fragment_program NormalesFS glsl 
+{
+    source NormalesFS.glsl
+    default_params {
+    }
+}
+
+
+
+material NormalesGLSL {
+    technique {
+        pass {
+            vertex_program_ref NormalesVS {
+            }
+            geometry_program_ref NormalesGS { 
+            }
+            fragment_program_ref NormalesFS {
+            }
+
+        }
+    } 
 }
