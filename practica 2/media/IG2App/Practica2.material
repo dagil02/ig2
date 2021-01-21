@@ -323,3 +323,53 @@ material NormalesGLSL {
         }
     } 
 }
+
+
+geometry_program Explota2GS glsl
+{
+	source Explota2GS.glsl
+	
+	input_operation_type triangles 
+	
+	output_operation_type triangle_strip 
+	
+	max_output_vertices 3 
+
+	default_params { 
+	param_named_auto modelViewProjMat worldviewproj_matrix
+	param_named_auto tiempo sintime_0_2pi 10
+	param_named_auto tiempo2pi time_0_2pi 32
+	} 
+}
+
+material Explota2GLSL{
+
+	technique { 
+		pass { 
+			cull_hardware none
+			cull_software none
+			
+			vertex_program_ref ExplotaVS
+			{	
+			}
+			geometry_program_ref Explota2GS 
+			{ 
+            }
+			fragment_program_ref ExplotaFS
+			{	
+			}
+			texture_unit texture0 { 
+				texture BumpyMetal.jpg 2d 
+				tex_address_mode clamp 
+				filtering bilinear 
+			}
+			texture_unit texture1 { 
+				texture corrosion.jpg 2d 
+				tex_address_mode wrap 
+			}			
+			
+			
+		}
+	}
+	
+}

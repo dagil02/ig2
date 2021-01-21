@@ -442,7 +442,7 @@ void Boya::receiveEvent(messages msg)
 
         animationState->setEnabled(explota);
         explota = !explota;
-       if (explota) boya->setMaterialName("ExplotaGLSL");
+       if (explota) boya->setMaterialName("Explota2GLSL");
        else boya->setMaterialName("BoyaGLSL");
     }
 }
