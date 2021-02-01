@@ -227,7 +227,8 @@ geometry_program ExplotaGS glsl
 
 	default_params { 
 	param_named_auto modelViewProjMat worldviewproj_matrix
-	param_named_auto tiempo sintime_0_2pi 10
+	//param_named_auto tiempo sintime_0_2pi 32
+	param_named_auto tiempo time 32
 	} 
 }
 
@@ -236,12 +237,11 @@ fragment_program ExplotaFS glsl
 	source ExplotaFS.glsl
 	default_params
 	{
-		param_named textura0 int 0;
-		param_named textura1 int 1;
-		param_named InColor float4 0.0 0.5 0.5 1.0;
-		param_named OutColor float4 0.5 0.5 0.5 1.0;
-		param_named_auto lightPosition light_position 0;
+		param_named texturaM int 0;
+		param_named texturaL int 1;
+		param_named_auto lightPosition light_position_view_space 0;
 		param_named_auto lightDiffuse light_diffuse_colour 0;
+		param_named materialDiffuse float3 1.0 1.0 1.0;
 		param_named_auto Flipping render_target_flipping ;
 	}
 }
@@ -262,12 +262,12 @@ material ExplotaGLSL{
 			fragment_program_ref ExplotaFS
 			{	
 			}
-			texture_unit texture0 { 
+			texture_unit  { 
 				texture BumpyMetal.jpg 2d 
 				tex_address_mode clamp 
 				filtering bilinear 
 			}
-			texture_unit texture1 { 
+			texture_unit  { 
 				texture corrosion.jpg 2d 
 				tex_address_mode wrap 
 			}			
@@ -338,7 +338,7 @@ geometry_program Explota2GS glsl
 
 	default_params { 
 	param_named_auto modelViewProjMat worldviewproj_matrix
-	param_named_auto tiempo sintime_0_2pi 10
+	param_named_auto tiempo time 32
 	param_named_auto tiempo2pi time_0_2pi 32
 	} 
 }

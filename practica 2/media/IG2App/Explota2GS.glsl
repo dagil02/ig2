@@ -4,7 +4,7 @@ layout (triangles) in;
 layout (triangle_strip, max_vertices = 3) out;
 
 uniform mat4 modelViewProjMat;
-const float VD = 50;
+const float VD = 1;
 uniform float tiempo;
 uniform float tiempo2pi;
 

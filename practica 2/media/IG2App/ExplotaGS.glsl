@@ -4,7 +4,7 @@ layout (triangles) in;
 layout (triangle_strip, max_vertices = 3) out;
 
 uniform mat4 modelViewProjMat;
-const float VD = 50;
+const float VD = 1;
 uniform float tiempo;
 
 in salidaVS
@@ -23,8 +23,8 @@ out salidaGS
 
 vec3 normalVec(vec3 vertex[3]) {
 	
-	vec3 u = vertex[1] - vertex[0];
-	vec3 v = vertex[2] - vertex[0];
+	vec3 u = vertex[2] - vertex[1];
+	vec3 v = vertex[0] - vertex[1];
 
 
 	return normalize(cross(u,v));
